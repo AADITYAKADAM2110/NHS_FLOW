@@ -1,0 +1,92 @@
+[
+    {
+        "equipment_id": "EQ-ICU-VENT",
+        "ward": "ICU",
+        "equipment_type": "Ventilator",
+        "available_units": 10,
+        "required_units": 4,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-ICU-MON",
+        "ward": "ICU",
+        "equipment_type": "Patient Monitor",
+        "available_units": 18,
+        "required_units": 9,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-EME-VENT",
+        "ward": "Emergency",
+        "equipment_type": "Ventilator",
+        "available_units": 4,
+        "required_units": 5,
+        "status": "Critical",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-EME-MON",
+        "ward": "Emergency",
+        "equipment_type": "Patient Monitor",
+        "available_units": 16,
+        "required_units": 11,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-GEN-VENT",
+        "ward": "General",
+        "equipment_type": "Ventilator",
+        "available_units": 2,
+        "required_units": 7,
+        "status": "Critical",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-GEN-MON",
+        "ward": "General",
+        "equipment_type": "Patient Monitor",
+        "available_units": 20,
+        "required_units": 18,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-SUR-VENT",
+        "ward": "Surgery",
+        "equipment_type": "Ventilator",
+        "available_units": 6,
+        "required_units": 4,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-SUR-MON",
+        "ward": "Surgery",
+        "equipment_type": "Patient Monitor",
+        "available_units": 14,
+        "required_units": 9,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-MAT-VENT",
+        "ward": "Maternity",
+        "equipment_type": "Ventilator",
+        "available_units": 1,
+        "required_units": 3,
+        "status": "Critical",
+        "last_updated": "2026-04-01 06:00:00"
+    },
+    {
+        "equipment_id": "EQ-MAT-MON",
+        "ward": "Maternity",
+        "equipment_type": "Patient Monitor",
+        "available_units": 10,
+        "required_units": 7,
+        "status": "OK",
+        "last_updated": "2026-04-01 06:00:00"
+    }
+]

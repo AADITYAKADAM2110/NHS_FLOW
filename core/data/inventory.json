@@ -1,0 +1,502 @@
+[
+    {
+        "item_id": "PPE-N95-523",
+        "name": "N95 Respirator Mask",
+        "category": "PPE",
+        "location": "Zone Pharmacy",
+        "current_stock": 91,
+        "min_threshold": 43,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-PARA-865",
+        "name": "Paracetamol IV 10mg",
+        "category": "Medication",
+        "location": "Zone C",
+        "current_stock": 177,
+        "min_threshold": 21,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-FACE-733",
+        "name": "Face Shield Type A",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 70,
+        "min_threshold": 43,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GLOV-545",
+        "name": "Gloves (Size S)",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 187,
+        "min_threshold": 49,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-ATOR-892",
+        "name": "Atorvastatin Pack",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 129,
+        "min_threshold": 34,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-APRO-976",
+        "name": "Apron Type A",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 107,
+        "min_threshold": 23,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-IBUP-806",
+        "name": "Ibuprofen Type A",
+        "category": "Medication",
+        "location": "Zone A",
+        "current_stock": 138,
+        "min_threshold": 46,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-BAND-889",
+        "name": "Bandage Pack",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 99,
+        "min_threshold": 35,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-INSU-322",
+        "name": "Insulin (Size M)",
+        "category": "Medication",
+        "location": "Zone A",
+        "current_stock": 19,
+        "min_threshold": 88,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "EQP-SYRI-671",
+        "name": "Syringe 5ml Generic",
+        "category": "Equipment",
+        "location": "Zone Pharmacy",
+        "current_stock": 128,
+        "min_threshold": 49,
+        "unit": "pack",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-SURG-365",
+        "name": "Surgical Mask Pack",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 173,
+        "min_threshold": 34,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-METF-230",
+        "name": "Metformin Type B",
+        "category": "PPE",
+        "location": "Zone Pharmacy",
+        "current_stock": 11,
+        "min_threshold": 66,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-SURG-139",
+        "name": "Surgical Mask (Size S)",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 88,
+        "min_threshold": 44,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-BAND-458",
+        "name": "Bandage Generic",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 157,
+        "min_threshold": 47,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GLOV-510",
+        "name": "Gloves Pack",
+        "category": "PPE",
+        "location": "Zone Pharmacy",
+        "current_stock": 150,
+        "min_threshold": 40,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-CANN-290",
+        "name": "Cannula 18G (Size L)",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 168,
+        "min_threshold": 20,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-SHOE-933",
+        "name": "Shoe Covers Type B",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 119,
+        "min_threshold": 44,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-CANN-416",
+        "name": "Cannula 18G (Size S)",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 200,
+        "min_threshold": 22,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GAUZ-862",
+        "name": "Gauze (Size M)",
+        "category": "PPE",
+        "location": "Zone B",
+        "current_stock": 60,
+        "min_threshold": 46,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-INSU-737",
+        "name": "Insulin Generic",
+        "category": "Medication",
+        "location": "Zone Pharmacy",
+        "current_stock": 13,
+        "min_threshold": 87,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-AMOX-987",
+        "name": "Amoxicillin (Size M)",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 83,
+        "min_threshold": 27,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-IBUP-295",
+        "name": "Ibuprofen Type B",
+        "category": "Medication",
+        "location": "Zone A",
+        "current_stock": 129,
+        "min_threshold": 34,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "EQP-SYRI-548",
+        "name": "Syringe 5ml Pack",
+        "category": "Equipment",
+        "location": "Zone C",
+        "current_stock": 11,
+        "min_threshold": 62,
+        "unit": "pack",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GLOV-193",
+        "name": "Gloves Generic",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 15,
+        "min_threshold": 74,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "EQP-SYRI-767",
+        "name": "Syringe 5ml (Size S)",
+        "category": "Equipment",
+        "location": "Zone Pharmacy",
+        "current_stock": 197,
+        "min_threshold": 41,
+        "unit": "pack",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GAUZ-299",
+        "name": "Gauze (Size S)",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 13,
+        "min_threshold": 86,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GLOV-634",
+        "name": "Gloves (Size L)",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 1,
+        "min_threshold": 59,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-SURG-920",
+        "name": "Surgical Mask (Size M)",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 18,
+        "min_threshold": 97,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "EQP-SCAL-248",
+        "name": "Scalpel Type B",
+        "category": "Equipment",
+        "location": "Zone Pharmacy",
+        "current_stock": 13,
+        "min_threshold": 70,
+        "unit": "pack",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GOWN-614",
+        "name": "Gown (Size L)",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 77,
+        "min_threshold": 39,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-FACE-477",
+        "name": "Face Shield (Size M)",
+        "category": "PPE",
+        "location": "Zone B",
+        "current_stock": 19,
+        "min_threshold": 64,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-PARA-397",
+        "name": "Paracetamol Generic",
+        "category": "Medication",
+        "location": "Zone A",
+        "current_stock": 179,
+        "min_threshold": 30,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-THER-427",
+        "name": "Thermometer Pack",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 15,
+        "min_threshold": 56,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-INSU-892",
+        "name": "Insulin (Size L)",
+        "category": "Medication",
+        "location": "Zone A",
+        "current_stock": 15,
+        "min_threshold": 64,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-PARA-762",
+        "name": "Paracetamol (Size S)",
+        "category": "Medication",
+        "location": "Zone B",
+        "current_stock": 16,
+        "min_threshold": 94,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-AMOX-325",
+        "name": "Amoxicillin (Size S)",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 197,
+        "min_threshold": 28,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-SURG-709",
+        "name": "Surgical Mask Type A",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 137,
+        "min_threshold": 30,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-CANN-837",
+        "name": "Cannula 18G Type B",
+        "category": "PPE",
+        "location": "Zone B",
+        "current_stock": 5,
+        "min_threshold": 72,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-THER-331",
+        "name": "Thermometer Generic",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 129,
+        "min_threshold": 41,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "EQP-SCAL-789",
+        "name": "Scalpel (Size M)",
+        "category": "Equipment",
+        "location": "Zone Pharmacy",
+        "current_stock": 75,
+        "min_threshold": 21,
+        "unit": "pack",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-APRO-846",
+        "name": "Apron Generic",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 118,
+        "min_threshold": 37,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-BAND-774",
+        "name": "Bandage (Size M)",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 13,
+        "min_threshold": 63,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-SHOE-816",
+        "name": "Shoe Covers (Size L)",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 160,
+        "min_threshold": 40,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-APRO-475",
+        "name": "Apron (Size M)",
+        "category": "PPE",
+        "location": "Zone B",
+        "current_stock": 152,
+        "min_threshold": 46,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-AMOX-961",
+        "name": "Amoxicillin (Size L)",
+        "category": "PPE",
+        "location": "Zone ICU",
+        "current_stock": 84,
+        "min_threshold": 33,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-BAND-643",
+        "name": "Bandage Type B",
+        "category": "PPE",
+        "location": "Zone Pharmacy",
+        "current_stock": 80,
+        "min_threshold": 32,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-GAUZ-695",
+        "name": "Gauze Type B",
+        "category": "PPE",
+        "location": "Zone C",
+        "current_stock": 62,
+        "min_threshold": 41,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "MED-INSU-530",
+        "name": "Insulin (Size S)",
+        "category": "Medication",
+        "location": "Zone Pharmacy",
+        "current_stock": 3,
+        "min_threshold": 96,
+        "unit": "vial",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "PPE-METF-645",
+        "name": "Metformin Type A",
+        "category": "PPE",
+        "location": "Zone A",
+        "current_stock": 198,
+        "min_threshold": 39,
+        "unit": "box",
+        "last_updated": "2026-03-13 16:13:19"
+    },
+    {
+        "item_id": "EQP-SYRI-503",
+        "name": "Syringe 5ml Type A",
+        "category": "Equipment",
+        "location": "Zone C",
+        "current_stock": 124,
+        "min_threshold": 32,
+        "unit": "pack",
+        "last_updated": "2026-03-13 16:13:19"
+    }
+]
