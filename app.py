@@ -11,16 +11,20 @@ from core.agents.saved_agents import communication_officer, manager
 from core.realtime_ops import (
     FORECAST_MODEL_NAME,
     UPDATE_INTERVAL_SECONDS,
+    advance_hospital_day,
     apply_recommendation_action,
     apply_emergency_capacity,
     apply_emergency_staffing,
     apply_full_emergency_stabilization,
+    build_hospital_map,
     build_operational_snapshot,
     build_realtime_state,
     build_system_totals,
     load_realtime_state,
     save_realtime_state,
+    set_operation_mode,
     simulate_realtime,
+    update_ward_state,
 )
 from core.tools.place_order import place_order
 
@@ -55,10 +59,6 @@ def init_session():
         st.session_state.realtime_state = load_realtime_state()
     if "auto_refresh" not in st.session_state:
         st.session_state.auto_refresh = True
-    if "recommendation_explanations" not in st.session_state:
-        st.session_state.recommendation_explanations = {}
-    if "selected_recommendation" not in st.session_state:
-        st.session_state.selected_recommendation = ""
     if "operation_message" not in st.session_state:
         st.session_state.operation_message = ""
     if "skip_realtime_refresh_once" not in st.session_state:
@@ -68,6 +68,8 @@ def init_session():
 def refresh_realtime_state():
     if st.session_state.skip_realtime_refresh_once:
         st.session_state.skip_realtime_refresh_once = False
+        return
+    if st.session_state.realtime_state.get("operation_mode") == "real":
         return
     st.session_state.realtime_state = simulate_realtime(
         st.session_state.realtime_state,
@@ -83,10 +85,9 @@ def reset_session():
 
 
 def reset_operations():
-    st.session_state.realtime_state = build_realtime_state()
+    mode = st.session_state.realtime_state.get("operation_mode", "simulation")
+    st.session_state.realtime_state = build_realtime_state(mode=mode)
     save_realtime_state(st.session_state.realtime_state)
-    st.session_state.recommendation_explanations = {}
-    st.session_state.selected_recommendation = ""
     st.session_state.operation_message = ""
     st.session_state.skip_realtime_refresh_once = True
 
@@ -400,18 +401,47 @@ def render_header():
 
 
 def render_auto_refresh():
-    if not st.session_state.auto_refresh:
-        return
-    components.html(
-        f"""
-        <script>
-            setTimeout(function() {{
-                window.parent.location.reload();
-            }}, {UPDATE_INTERVAL_SECONDS * 1000});
-        </script>
-        """,
-        height=0,
-    )
+    mode = st.session_state.realtime_state.get("operation_mode", "simulation")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        button_label = "Advance Hospital Day" if mode == "real" else "Advance Simulation (1 day)"
+        if st.button(button_label, use_container_width=True):
+            if mode == "real":
+                st.session_state.realtime_state, st.session_state.operation_message = advance_hospital_day(
+                    st.session_state.realtime_state
+                )
+                save_realtime_state(st.session_state.realtime_state)
+                st.session_state.skip_realtime_refresh_once = True
+            else:
+                refresh_realtime_state()
+            rerun_app()
+    with col2:
+        disabled = mode == "real"
+        if disabled:
+            st.session_state.auto_refresh = False
+        st.checkbox(
+            "Auto-advance every 60 seconds",
+            key="auto_refresh_checkbox",
+            value=st.session_state.auto_refresh,
+            disabled=disabled,
+        )
+        if st.session_state.auto_refresh_checkbox != st.session_state.auto_refresh:
+            st.session_state.auto_refresh = st.session_state.auto_refresh_checkbox
+            rerun_app()
+
+    if mode == "real":
+        st.caption("Real mode is active. Automatic simulation is paused until you manually advance the hospital day.")
+    elif st.session_state.auto_refresh:
+        components.html(
+            f"""
+            <script>
+                setTimeout(function() {{
+                    window.parent.location.reload();
+                }}, {UPDATE_INTERVAL_SECONDS * 1000});
+            </script>
+            """,
+            height=0,
+        )
 
 
 def render_operations_summary(snapshot):
@@ -445,17 +475,32 @@ def render_operations_summary(snapshot):
 
 
 def render_operations_controls():
-    left, right, spacer = st.columns([1, 1, 3])
+    current_mode = st.session_state.realtime_state.get("operation_mode", "simulation")
+    left, middle, right = st.columns([1.2, 1, 2.8])
     with left:
-        st.session_state.auto_refresh = st.checkbox(
-            "Auto refresh live board",
-            value=st.session_state.auto_refresh,
+        selected_mode = st.radio(
+            "Operations mode",
+            options=["simulation", "real"],
+            index=0 if current_mode == "simulation" else 1,
+            horizontal=True,
         )
-    with right:
-        if st.button("Reset Live Simulation", use_container_width=True):
+        if selected_mode != current_mode:
+            st.session_state.realtime_state, st.session_state.operation_message = set_operation_mode(
+                st.session_state.realtime_state,
+                selected_mode,
+            )
+            save_realtime_state(st.session_state.realtime_state)
+            st.session_state.skip_realtime_refresh_once = True
+            rerun_app()
+    with middle:
+        if st.button("Reset Operations Data", use_container_width=True):
             reset_operations()
             rerun_app()
-    st.caption(f"Simulation refreshes every {UPDATE_INTERVAL_SECONDS} seconds when auto refresh is enabled.")
+    with right:
+        if current_mode == "real":
+            st.caption("Real mode lets staff manually update beds, admissions, discharges, and staffing. No automatic simulation runs.")
+        else:
+            st.caption(f"Simulation refreshes every {UPDATE_INTERVAL_SECONDS} seconds when auto refresh is enabled.")
 
 
 def apply_and_persist_operations_action(action):
@@ -483,82 +528,84 @@ def render_emergency_controls():
             apply_and_persist_operations_action(apply_full_emergency_stabilization)
 
 
-def build_recommendation_context(snapshot, recommendation, simulation_now):
-    ward_name = recommendation.split(":", 1)[0].strip()
-    matching_rows = snapshot[snapshot["Ward"] == ward_name] if "Ward" in snapshot.columns else pd.DataFrame()
-
-    if matching_rows.empty:
-        ward_context = "No ward-specific row matched this recommendation."
-    else:
-        row = matching_rows.iloc[0]
-        ward_context = (
-            f"Ward={row['Ward']}, Occupied Beds={row['Occupied Beds']}, Capacity={row['Capacity']}, "
-            f"Occupancy %={row['Occupancy %']}, Predicted Avg Tomorrow={row['Predicted Avg Tomorrow']}, "
-            f"Predicted Peak Tomorrow={row['Predicted Peak Tomorrow']}, "
-            f"Nurses Available={row['Nurses Available']}, Nurses Required={row['Nurses Required']}, "
-            f"Doctors Available={row['Doctors Available']}, Doctors Required={row['Doctors Required']}, "
-            f"Ventilators Available={row['Ventilators Available']}, Ventilators Required={row['Ventilators Required']}, "
-            f"Monitors Available={row['Monitors Available']}, Monitors Required={row['Monitors Required']}."
+def render_real_mode_editor():
+    if st.session_state.realtime_state.get("operation_mode") != "real":
+        return
+    st.subheader("Real Mode Ward Updates")
+    wards = st.session_state.realtime_state["wards"]
+    ward_names = [ward["ward"] for ward in wards]
+    selected_ward = st.selectbox("Select ward to update", ward_names, key="real_mode_ward")
+    ward = next(ward for ward in wards if ward["ward"] == selected_ward)
+    with st.form("real-mode-editor"):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            admissions = st.number_input("New patients", min_value=0, value=0, step=1)
+            discharges = st.number_input("Discharges", min_value=0, value=0, step=1)
+            capacity = st.number_input("Total beds", min_value=1, value=int(ward["capacity"]), step=1)
+        with col2:
+            occupied_beds = st.number_input("Occupied beds", min_value=0, value=int(ward["occupied_beds"]), step=1)
+            nurses_available = st.number_input("Nurses available", min_value=0, value=int(ward["nurses_available"]), step=1)
+            doctors_available = st.number_input("Doctors available", min_value=0, value=int(ward["doctors_available"]), step=1)
+        with col3:
+            ventilators_available = st.number_input("Ventilators available", min_value=0, value=int(ward["ventilators_available"]), step=1)
+            monitors_available = st.number_input("Monitors available", min_value=0, value=int(ward["monitors_available"]), step=1)
+        submitted = st.form_submit_button("Save ward updates", use_container_width=True)
+    if submitted:
+        updates = {
+            "admissions": admissions,
+            "discharges": discharges,
+            "capacity": capacity,
+            "occupied_beds": occupied_beds,
+            "nurses_available": nurses_available,
+            "doctors_available": doctors_available,
+            "ventilators_available": ventilators_available,
+            "monitors_available": monitors_available,
+        }
+        st.session_state.realtime_state, st.session_state.operation_message = update_ward_state(
+            st.session_state.realtime_state,
+            selected_ward,
+            updates,
         )
-
-    return (
-        f"Simulated hospital time: {simulation_now.strftime('%d %b %Y %H:%M')}. "
-        f"Recommendation: {recommendation}. "
-        f"Context: {ward_context}"
-    )
-
-
-def explain_recommendation_with_ai(snapshot, recommendation, simulation_now):
-    if recommendation in st.session_state.recommendation_explanations:
-        return st.session_state.recommendation_explanations[recommendation]
-
-    prompt = (
-        "You are an NHS hospital operations analyst. "
-        "Explain this recommendation in 3 short bullet points using plain operational language. "
-        "State why it matters now, what metric triggered it, and what action the operations team should take next. "
-        "Do not mention that the data is simulated unless the prompt says so.\n\n"
-        f"{build_recommendation_context(snapshot, recommendation, simulation_now)}"
-    )
-
-    try:
-        client = OpenAI()
-        response = client.responses.create(
-            model="gpt-4.1-nano",
-            input=prompt,
-        )
-        explanation = (response.output_text or "").strip()
-        if not explanation:
-            explanation = "AI explanation returned no text."
-    except Exception as exc:
-        explanation = f"AI explanation unavailable: {exc}"
-
-    st.session_state.recommendation_explanations[recommendation] = explanation
-    return explanation
+        save_realtime_state(st.session_state.realtime_state)
+        st.session_state.skip_realtime_refresh_once = True
+        rerun_app()
 
 
 def render_operations_alerts(alerts, snapshot, simulation_now):
     st.subheader("Operational Recommendations")
+    
+    # Apply All button
+    if st.button("Apply All Recommendations", use_container_width=True):
+        current_state = st.session_state.realtime_state
+        messages = []
+        for alert in alerts[:8]:
+            if alert.get("action_type") != "maintain_monitoring":
+                updated_state, message = apply_recommendation_action(current_state, alert)
+                current_state = updated_state
+                messages.append(message)
+        st.session_state.realtime_state = current_state
+        save_realtime_state(st.session_state.realtime_state)
+        st.session_state.operation_message = "Applied all recommendations: " + "; ".join(messages)
+        st.session_state.skip_realtime_refresh_once = True
+        rerun_app()
+    
     for index, alert in enumerate(alerts[:8], start=1):
-        st.markdown(f"<div class='alert-card'>{alert}</div>", unsafe_allow_html=True)
-        button_col1, button_col2 = st.columns([1, 1])
+        alert_id = alert["id"]
+        source = "AI" if alert.get("source") == "ai" else "Rules"
+        display_text = alert['text']
+        if alert.get("source") == "ai" and alert.get("reason"):
+            display_text += f"<br><strong>AI Explanation:</strong> {alert['reason']}"
+        st.markdown(f"<div class='alert-card'>{display_text}<br><small>{source} recommendation</small></div>", unsafe_allow_html=True)
+        button_col1 = st.columns([1])[0]
         with button_col1:
-            if st.button("Apply Recommendation", key=f"apply-{index}-{alert}"):
+            disabled = alert.get("action_type") == "maintain_monitoring"
+            if st.button("Apply Recommendation", key=f"apply-{index}-{alert_id}", disabled=disabled):
                 updated_state, message = apply_recommendation_action(st.session_state.realtime_state, alert)
                 st.session_state.realtime_state = updated_state
                 save_realtime_state(st.session_state.realtime_state)
-                st.session_state.selected_recommendation = alert
                 st.session_state.operation_message = message
                 st.session_state.skip_realtime_refresh_once = True
                 rerun_app()
-        with button_col2:
-            if st.button("Explain with AI", key=f"recommendation-{index}-{alert}"):
-                st.session_state.selected_recommendation = alert
-                explain_recommendation_with_ai(snapshot, alert, simulation_now)
-
-        if st.session_state.selected_recommendation == alert:
-            explanation = st.session_state.recommendation_explanations.get(alert)
-            if explanation:
-                st.info(explanation)
 
 
 def build_svg_line_chart(points, labels, stroke, width=760, height=240):
@@ -652,6 +699,106 @@ def render_operations_charts(history):
     render_ward_trend(history)
 
 
+def render_hospital_map(snapshot):
+    st.subheader("Hospital Map")
+    zones = build_hospital_map(snapshot)
+    if not zones:
+        st.info("No hospital map data available.")
+        return
+    ward_names = [zone["ward"] for zone in zones]
+    default_index = 0
+    if "selected_map_ward" in st.session_state and st.session_state.selected_map_ward in ward_names:
+        default_index = ward_names.index(st.session_state.selected_map_ward)
+    selected_ward = st.selectbox("Ward detail view", ward_names, index=default_index, key="selected_map_ward")
+    width = max(zone["x"] + zone["w"] for zone in zones) + 24
+    height = max(zone["y"] + zone["h"] for zone in zones) + 24
+    svg_parts = [
+        "<div class='nhs-card'>",
+        f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {width} {height}' width='100%' height='{height}' role='img' aria-label='Hospital map'>",
+        f"<rect x='0' y='0' width='{width}' height='{height}' rx='24' fill='#ffffff'></rect>",
+    ]
+    for zone in zones:
+        staff = zone["staff"]
+        is_selected = zone["ward"] == selected_ward
+        stroke_width = 6 if is_selected else 3
+        fill_opacity = 0.28 if is_selected else 0.15
+        label_fill = "#0b3d36" if is_selected else "#16352f"
+        svg_parts.append(
+            f"""
+            <g>
+                <rect x="{zone['x']}" y="{zone['y']}" width="{zone['w']}" height="{zone['h']}" rx="18"
+                    fill="{zone['fill']}" fill-opacity="{fill_opacity}" stroke="{zone['fill']}" stroke-width="{stroke_width}"></rect>
+                <title>{zone['tooltip']}</title>
+                <text x="{zone['x'] + 14}" y="{zone['y'] + 24}" font-size="16" font-weight="700" fill="{label_fill}">{zone['ward']}</text>
+                <text x="{zone['x'] + 14}" y="{zone['y'] + 46}" font-size="13" fill="{label_fill}">Beds {zone['beds']}</text>
+                <text x="{zone['x'] + 14}" y="{zone['y'] + 64}" font-size="13" fill="{label_fill}">Nurses {zone['nurses']}</text>
+                <text x="{zone['x'] + 14}" y="{zone['y'] + 82}" font-size="13" fill="{label_fill}">Doctors {zone['doctors']}</text>
+                <text x="{zone['x'] + 14}" y="{zone['y'] + 100}" font-size="13" fill="{label_fill}">Vent {zone['ventilators']} | Mon {zone['monitors']}</text>
+                <text x="{zone['x'] + zone['w'] - 14}" y="{zone['y'] + 24}" text-anchor="end" font-size="12" fill="{label_fill}">{zone['occupancy']:.1f}% occ</text>
+                <text x="{zone['x'] + zone['w'] - 14}" y="{zone['y'] + 46}" text-anchor="end" font-size="12" fill="{label_fill}">Staff {staff.get('total', 0)}</text>
+            </g>
+            """
+        )
+    svg_parts.extend(["</svg>", "</div>"])
+    components.html("".join(svg_parts), height=height + 40)
+    st.caption("Hover a ward for quick metrics. Use the selector below for the full table-backed detail view.")
+    selected_zone = next(zone for zone in zones if zone["ward"] == selected_ward)
+    details = selected_zone["details"]
+    st.markdown(
+        f"""
+        <div class="nhs-card">
+            <strong>{selected_ward} Detail</strong>
+            <div class="metric-strip">
+                <div class="metric-card">
+                    <div class="label">Occupied Beds</div>
+                    <div class="value">{details['Occupied Beds']}/{details['Capacity']}</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Occupancy</div>
+                    <div class="value">{details['Occupancy %']:.1f}%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Staff On Ward</div>
+                    <div class="value">{details['Staff Total']}</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Predicted Peak</div>
+                    <div class="value">{details['Predicted Peak Tomorrow']}</div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    staffing_frame = pd.DataFrame(
+        [
+            {"Metric": "Admissions/hr", "Value": details["Admissions/hr"]},
+            {"Metric": "Discharges/hr", "Value": details["Discharges/hr"]},
+            {"Metric": "Nurses Available", "Value": details["Nurses Available"]},
+            {"Metric": "Nurses Required", "Value": details["Nurses Required"]},
+            {"Metric": "Doctors Available", "Value": details["Doctors Available"]},
+            {"Metric": "Doctors Required", "Value": details["Doctors Required"]},
+            {"Metric": "Staff Nurses", "Value": details["Staff Nurses"]},
+            {"Metric": "Staff Doctors", "Value": details["Staff Doctors"]},
+        ]
+    )
+    equipment_frame = pd.DataFrame(
+        [
+            {"Metric": "Predicted Avg Tomorrow", "Value": details["Predicted Avg Tomorrow"]},
+            {"Metric": "Predicted Peak Tomorrow", "Value": details["Predicted Peak Tomorrow"]},
+            {"Metric": "Ventilators Available", "Value": details["Ventilators Available"]},
+            {"Metric": "Ventilators Required", "Value": details["Ventilators Required"]},
+            {"Metric": "Monitors Available", "Value": details["Monitors Available"]},
+            {"Metric": "Monitors Required", "Value": details["Monitors Required"]},
+        ]
+    )
+    left, right = st.columns(2, gap="large")
+    with left:
+        render_table_card(f"{selected_ward} Staffing Flow", staffing_frame)
+    with right:
+        render_table_card(f"{selected_ward} Equipment and Forecast", equipment_frame)
+
+
 def render_operations_tables(snapshot, simulation_now):
     forecast_date = (simulation_now + pd.Timedelta(days=1)).strftime("%d %b %Y")
     render_table_card(
@@ -714,8 +861,14 @@ def render_operations_tab():
     st.write("")
     render_operations_controls()
     st.write("")
-    render_emergency_controls()
+    render_real_mode_editor()
+    if st.session_state.realtime_state.get("operation_mode") == "real":
+        st.write("")
+    render_hospital_map(snapshot)
     st.write("")
+    if st.session_state.realtime_state.get("operation_mode") != "real":
+        render_emergency_controls()
+        st.write("")
     left, right = st.columns([1.15, 0.85], gap="large")
     with left:
         render_operations_charts(history)
@@ -724,8 +877,8 @@ def render_operations_tab():
     st.write("")
     render_operations_tables(snapshot, simulation_now)
     st.caption(
-        f"Simulated hospital time: {simulation_now.strftime('%d %b %Y %H:%M')} | "
-        f"Dashboard refresh cycle: every {UPDATE_INTERVAL_SECONDS} seconds"
+        f"Hospital time: {simulation_now.strftime('%d %b %Y %H:%M')} | "
+        f"Mode: {st.session_state.realtime_state.get('operation_mode', 'simulation').title()}"
     )
 
 

@@ -1,53 +1,54 @@
 {
-  "last_updated": "2026-03-14T22:14:21.772968",
-  "simulation_now": "2031-02-17T06:00:00",
+  "last_updated": "2026-03-25T17:01:41.355178",
+  "simulation_now": "2026-04-12T06:00:00",
+  "operation_mode": "real",
   "wards": [
     {
       "ward": "ICU",
-      "capacity": 32,
-      "occupied_beds": 32,
-      "available_beds": 0,
-      "occupancy_rate": 1.0,
-      "admissions_last_hour": 3,
-      "discharges_last_hour": 2,
-      "nurses_available": 17,
-      "doctors_available": 25,
-      "ventilators_available": 10,
-      "monitors_available": 18,
-      "required_nurses": 8,
-      "required_doctors": 3,
-      "required_ventilators": 6,
-      "required_monitors": 15
+      "capacity": 24,
+      "occupied_beds": 3,
+      "admissions_last_hour": 4,
+      "discharges_last_hour": 1,
+      "nurses_available": 2,
+      "doctors_available": 2,
+      "ventilators_available": 16,
+      "monitors_available": 20,
+      "available_beds": 21,
+      "occupancy_rate": 0.125,
+      "required_nurses": 2,
+      "required_doctors": 1,
+      "required_ventilators": 1,
+      "required_monitors": 2
     },
     {
       "ward": "Emergency",
-      "capacity": 40,
-      "occupied_beds": 40,
-      "available_beds": 0,
-      "occupancy_rate": 1.0,
+      "capacity": 32,
+      "occupied_beds": 5,
       "admissions_last_hour": 3,
-      "discharges_last_hour": 2,
-      "nurses_available": 25,
-      "doctors_available": 30,
-      "ventilators_available": 4,
-      "monitors_available": 16,
-      "required_nurses": 10,
-      "required_doctors": 4,
-      "required_ventilators": 8,
-      "required_monitors": 18
+      "discharges_last_hour": 3,
+      "nurses_available": 5,
+      "doctors_available": 22,
+      "ventilators_available": 7,
+      "monitors_available": 17,
+      "available_beds": 27,
+      "occupancy_rate": 0.156,
+      "required_nurses": 2,
+      "required_doctors": 1,
+      "required_ventilators": 1,
+      "required_monitors": 3
     },
     {
       "ward": "General",
-      "capacity": 68,
+      "capacity": 60,
       "occupied_beds": 0,
-      "available_beds": 68,
-      "occupancy_rate": 0.0,
       "admissions_last_hour": 2,
-      "discharges_last_hour": 4,
-      "nurses_available": 10,
-      "doctors_available": 25,
-      "ventilators_available": 2,
-      "monitors_available": 20,
+      "discharges_last_hour": 3,
+      "nurses_available": 24,
+      "doctors_available": 2,
+      "ventilators_available": 4,
+      "monitors_available": 28,
+      "available_beds": 60,
+      "occupancy_rate": 0.0,
       "required_nurses": 2,
       "required_doctors": 1,
       "required_ventilators": 0,
@@ -55,3654 +56,450 @@
     },
     {
       "ward": "Surgery",
-      "capacity": 36,
-      "occupied_beds": 35,
-      "available_beds": 1,
-      "occupancy_rate": 0.972,
-      "admissions_last_hour": 3,
-      "discharges_last_hour": 3,
-      "nurses_available": 75,
-      "doctors_available": 47,
+      "capacity": 32,
+      "occupied_beds": 27,
+      "admissions_last_hour": 5,
+      "discharges_last_hour": 2,
+      "nurses_available": 12,
+      "doctors_available": 4,
       "ventilators_available": 6,
-      "monitors_available": 14,
-      "required_nurses": 9,
+      "monitors_available": 21,
+      "available_beds": 5,
+      "occupancy_rate": 0.844,
+      "required_nurses": 7,
       "required_doctors": 3,
-      "required_ventilators": 7,
-      "required_monitors": 16
+      "required_ventilators": 5,
+      "required_monitors": 13
     },
     {
       "ward": "Maternity",
-      "capacity": 26,
-      "occupied_beds": 23,
-      "available_beds": 3,
-      "occupancy_rate": 0.885,
-      "admissions_last_hour": 3,
-      "discharges_last_hour": 3,
-      "nurses_available": 67,
-      "doctors_available": 12,
+      "capacity": 22,
+      "occupied_beds": 0,
+      "admissions_last_hour": 1,
+      "discharges_last_hour": 2,
+      "nurses_available": 19,
+      "doctors_available": 18,
       "ventilators_available": 1,
       "monitors_available": 10,
-      "required_nurses": 6,
-      "required_doctors": 2,
-      "required_ventilators": 5,
-      "required_monitors": 11
+      "available_beds": 22,
+      "occupancy_rate": 0.0,
+      "required_nurses": 2,
+      "required_doctors": 1,
+      "required_ventilators": 0,
+      "required_monitors": 0
     }
   ],
   "recommendation_log": {
-    "ICU: occupancy above 90%, move overflow plan to standby.": "2031-02-17T06:00:00",
-    "Emergency: occupancy above 90%, move overflow plan to standby.": "2031-02-17T06:00:00",
-    "Surgery: occupancy above 90%, move overflow plan to standby.": "2031-02-17T06:00:00",
-    "Maternity: occupancy above 80%, pre-position extra staff and discharge support.": "2031-02-17T06:00:00",
-    "ICU: predicted to hit full capacity tomorrow, trigger escalation bed plan.": "2031-02-17T06:00:00",
-    "Emergency: redeploy 4 ventilator(s) from lower-acuity wards.": "2031-02-17T06:00:00",
-    "Emergency: move 2 patient monitor(s) into the ward.": "2031-02-17T06:00:00",
-    "Emergency: predicted to hit full capacity tomorrow, trigger escalation bed plan.": "2031-02-17T06:00:00",
-    "Surgery: redeploy 1 ventilator(s) from lower-acuity wards.": "2031-02-17T06:00:00",
-    "Surgery: move 2 patient monitor(s) into the ward.": "2031-02-17T06:00:00",
-    "Surgery: predicted to hit full capacity tomorrow, trigger escalation bed plan.": "2031-02-17T06:00:00",
-    "Maternity: redeploy 4 ventilator(s) from lower-acuity wards.": "2031-02-17T06:00:00",
-    "Maternity: move 1 patient monitor(s) into the ward.": "2031-02-17T06:00:00"
+    "Emergency:assign_nurses:2": "2026-04-11T06:00:00",
+    "Surgery:redeploy_ventilators:1": "2026-04-11T06:00:00",
+    "Emergency:move_monitors:2": "2026-04-11T06:00:00",
+    "Surgery:trigger_bed_plan:0": "2026-04-12T06:00:00",
+    "Surgery:assign_nurses:1": "2026-04-12T06:00:00",
+    "ICU:move_monitors:2": "2026-04-12T06:00:00",
+    "ICU:assign_nurses:0": "2026-04-12T06:00:00",
+    "Emergency:ringfence_discharge:0": "2026-04-12T06:00:00",
+    "Emergency:maintain_monitoring:0": "2026-04-12T06:00:00",
+    "Maternity:preposition_staff:2": "2026-04-12T06:00:00",
+    "General:redeploy_ventilators:0": "2026-04-12T06:00:00",
+    "Surgery:overflow_standby:0": "2026-04-12T06:00:00",
+    "ICU:preposition_staff:1": "2026-04-12T06:00:00",
+    "ICU:redeploy_ventilators:1": "2026-04-12T06:00:00",
+    "Surgery:assign_nurses:4": "2026-04-12T06:00:00",
+    "Emergency:add_doctors:1": "2026-04-12T06:00:00",
+    "Surgery:preposition_staff:0": "2026-04-12T06:00:00",
+    "Surgery:ringfence_discharge:0": "2026-04-12T06:00:00",
+    "Surgery:ringfence_discharge:2": "2026-04-12T06:00:00",
+    "Emergency:move_monitors:14": "2026-04-12T06:00:00",
+    "Surgery:assign_nurses:2": "2026-04-12T06:00:00",
+    "Surgery:ringfence_discharge:4": "2026-04-12T06:00:00",
+    "ICU:preposition_staff:2": "2026-04-12T06:00:00",
+    "Emergency:assign_nurses:1": "2026-04-12T06:00:00",
+    "Surgery:move_monitors:6": "2026-04-12T06:00:00"
   },
   "history": [
     {
-      "timestamp": "2030-10-21T06:00:00",
+      "timestamp": "2026-03-28T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
+      "occupied_beds": 2,
+      "capacity": 24
     },
     {
-      "timestamp": "2030-10-21T06:00:00",
+      "timestamp": "2026-03-29T06:00:00",
       "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-21T06:00:00",
-      "ward": "General",
-      "occupied_beds": 49,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-21T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-21T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-22T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-22T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-22T06:00:00",
-      "ward": "General",
-      "occupied_beds": 48,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-22T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-22T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-23T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-23T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-23T06:00:00",
-      "ward": "General",
-      "occupied_beds": 50,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-23T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-23T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-24T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-24T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-24T06:00:00",
-      "ward": "General",
-      "occupied_beds": 52,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-24T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-24T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-25T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-25T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-25T06:00:00",
-      "ward": "General",
-      "occupied_beds": 51,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-25T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-25T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-26T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-26T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-26T06:00:00",
-      "ward": "General",
-      "occupied_beds": 51,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-26T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-26T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-27T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-27T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-27T06:00:00",
-      "ward": "General",
-      "occupied_beds": 51,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-27T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-27T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-28T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-28T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-28T06:00:00",
-      "ward": "General",
-      "occupied_beds": 49,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-28T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-28T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-29T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-29T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-29T06:00:00",
-      "ward": "General",
-      "occupied_beds": 51,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-29T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-29T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-30T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-30T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-30T06:00:00",
-      "ward": "General",
-      "occupied_beds": 53,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-30T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-30T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-10-31T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-10-31T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-10-31T06:00:00",
-      "ward": "General",
-      "occupied_beds": 52,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-10-31T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-10-31T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-01T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-01T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-01T06:00:00",
-      "ward": "General",
-      "occupied_beds": 49,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-01T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-01T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-02T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-02T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-02T06:00:00",
-      "ward": "General",
-      "occupied_beds": 49,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-02T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-02T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-03T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-03T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-03T06:00:00",
-      "ward": "General",
-      "occupied_beds": 49,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-03T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-03T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-04T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-04T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-04T06:00:00",
-      "ward": "General",
-      "occupied_beds": 50,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-04T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-04T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-05T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-05T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-05T06:00:00",
-      "ward": "General",
-      "occupied_beds": 50,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-05T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-05T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-06T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-06T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-06T06:00:00",
-      "ward": "General",
-      "occupied_beds": 50,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-06T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-06T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-07T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-07T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-07T06:00:00",
-      "ward": "General",
-      "occupied_beds": 49,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-07T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-07T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-08T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-08T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-08T06:00:00",
-      "ward": "General",
-      "occupied_beds": 50,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-08T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-08T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-09T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 30,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-09T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-09T06:00:00",
-      "ward": "General",
-      "occupied_beds": 47,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-09T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-09T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-10T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-10T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-10T06:00:00",
-      "ward": "General",
-      "occupied_beds": 47,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-10T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-10T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-11T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-11T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-11T06:00:00",
-      "ward": "General",
-      "occupied_beds": 46,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-11T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-11T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-12T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-12T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-12T06:00:00",
-      "ward": "General",
-      "occupied_beds": 46,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-12T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-12T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-13T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-13T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-13T06:00:00",
-      "ward": "General",
-      "occupied_beds": 46,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-13T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-13T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-14T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-14T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-14T06:00:00",
-      "ward": "General",
-      "occupied_beds": 45,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-14T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-14T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-15T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-15T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-15T06:00:00",
-      "ward": "General",
-      "occupied_beds": 42,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-15T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-15T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-16T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-16T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-16T06:00:00",
-      "ward": "General",
-      "occupied_beds": 40,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-16T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-16T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-17T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-17T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-17T06:00:00",
-      "ward": "General",
-      "occupied_beds": 40,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-17T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-17T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-18T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-18T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-18T06:00:00",
-      "ward": "General",
-      "occupied_beds": 38,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-18T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-18T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-19T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-19T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-19T06:00:00",
-      "ward": "General",
-      "occupied_beds": 38,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-19T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-19T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-20T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-20T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-20T06:00:00",
-      "ward": "General",
-      "occupied_beds": 36,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-20T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-20T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-21T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-21T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-21T06:00:00",
-      "ward": "General",
-      "occupied_beds": 34,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-21T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-21T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-22T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-22T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-22T06:00:00",
-      "ward": "General",
-      "occupied_beds": 33,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-22T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-22T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-23T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-23T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-23T06:00:00",
-      "ward": "General",
-      "occupied_beds": 32,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-23T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-23T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-24T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-24T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-24T06:00:00",
-      "ward": "General",
-      "occupied_beds": 32,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-24T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-24T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-25T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-25T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-25T06:00:00",
-      "ward": "General",
-      "occupied_beds": 31,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-25T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-25T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-26T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-26T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-26T06:00:00",
-      "ward": "General",
-      "occupied_beds": 33,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-26T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-26T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-27T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-27T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-27T06:00:00",
-      "ward": "General",
-      "occupied_beds": 32,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-27T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-27T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-28T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-28T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-28T06:00:00",
-      "ward": "General",
-      "occupied_beds": 33,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-28T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-28T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-29T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-29T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-29T06:00:00",
-      "ward": "General",
-      "occupied_beds": 33,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-29T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-29T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-11-30T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-11-30T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-11-30T06:00:00",
-      "ward": "General",
-      "occupied_beds": 32,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-11-30T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-11-30T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-01T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-01T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-01T06:00:00",
-      "ward": "General",
-      "occupied_beds": 31,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-01T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-01T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-02T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-02T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-02T06:00:00",
-      "ward": "General",
-      "occupied_beds": 31,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-02T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-02T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-03T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-03T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-03T06:00:00",
-      "ward": "General",
-      "occupied_beds": 31,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-03T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-03T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-04T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-04T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-04T06:00:00",
-      "ward": "General",
-      "occupied_beds": 29,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-04T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-04T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-05T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-05T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-05T06:00:00",
-      "ward": "General",
-      "occupied_beds": 30,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-05T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-05T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-06T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-06T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-06T06:00:00",
-      "ward": "General",
-      "occupied_beds": 31,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-06T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 34,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-06T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-07T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-07T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-07T06:00:00",
-      "ward": "General",
-      "occupied_beds": 30,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-07T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-07T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-08T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-08T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-08T06:00:00",
-      "ward": "General",
-      "occupied_beds": 29,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-08T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-08T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-09T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-09T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-09T06:00:00",
-      "ward": "General",
-      "occupied_beds": 28,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-09T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-09T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-10T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-10T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-10T06:00:00",
-      "ward": "General",
-      "occupied_beds": 28,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-10T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 34,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-10T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-11T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-11T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-11T06:00:00",
-      "ward": "General",
-      "occupied_beds": 26,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-11T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-11T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-12T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 30,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-12T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-12T06:00:00",
-      "ward": "General",
-      "occupied_beds": 24,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-12T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-12T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-13T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-13T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-13T06:00:00",
-      "ward": "General",
-      "occupied_beds": 22,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-13T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-13T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-14T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-14T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-14T06:00:00",
-      "ward": "General",
-      "occupied_beds": 20,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-14T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-14T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-15T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-15T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-15T06:00:00",
-      "ward": "General",
-      "occupied_beds": 19,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-15T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-15T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-16T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-16T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-16T06:00:00",
-      "ward": "General",
-      "occupied_beds": 17,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-16T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-16T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-17T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-17T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-17T06:00:00",
-      "ward": "General",
       "occupied_beds": 16,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-17T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-17T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 22,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-18T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
       "capacity": 32
     },
     {
-      "timestamp": "2030-12-18T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-18T06:00:00",
+      "timestamp": "2026-03-30T06:00:00",
       "ward": "General",
-      "occupied_beds": 16,
-      "capacity": 68
+      "occupied_beds": 0,
+      "capacity": 60
     },
     {
-      "timestamp": "2030-12-18T06:00:00",
+      "timestamp": "2026-03-31T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-18T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 23,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-19T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-19T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-19T06:00:00",
-      "ward": "General",
-      "occupied_beds": 16,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-19T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-19T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 22,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-20T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-20T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-20T06:00:00",
-      "ward": "General",
-      "occupied_beds": 15,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-20T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-20T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 22,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-21T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-21T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-21T06:00:00",
-      "ward": "General",
-      "occupied_beds": 15,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-21T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-21T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 23,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-22T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 30,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-22T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-22T06:00:00",
-      "ward": "General",
-      "occupied_beds": 14,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-22T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-22T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 23,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-23T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-23T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-23T06:00:00",
-      "ward": "General",
-      "occupied_beds": 12,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-23T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-23T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-24T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-24T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-24T06:00:00",
-      "ward": "General",
-      "occupied_beds": 11,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-24T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-24T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-25T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-25T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-25T06:00:00",
-      "ward": "General",
-      "occupied_beds": 11,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-25T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-25T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-26T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-26T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-26T06:00:00",
-      "ward": "General",
-      "occupied_beds": 9,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-26T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-26T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 25,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-27T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-27T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-27T06:00:00",
-      "ward": "General",
-      "occupied_beds": 9,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-27T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-27T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-28T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-28T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-28T06:00:00",
-      "ward": "General",
-      "occupied_beds": 8,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-28T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-28T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-29T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-29T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-29T06:00:00",
-      "ward": "General",
-      "occupied_beds": 8,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-29T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-29T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 23,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-30T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-30T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-30T06:00:00",
-      "ward": "General",
-      "occupied_beds": 7,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-30T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-30T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2030-12-31T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2030-12-31T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2030-12-31T06:00:00",
-      "ward": "General",
-      "occupied_beds": 7,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2030-12-31T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2030-12-31T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-01T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-01T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-01T06:00:00",
-      "ward": "General",
-      "occupied_beds": 5,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-01T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 33,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-01T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 22,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-02T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-02T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-02T06:00:00",
-      "ward": "General",
-      "occupied_beds": 5,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-02T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 34,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-02T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 23,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-03T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-03T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-03T06:00:00",
-      "ward": "General",
-      "occupied_beds": 5,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-03T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-03T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 22,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-04T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-04T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 39,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-04T06:00:00",
-      "ward": "General",
-      "occupied_beds": 4,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-04T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-04T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 21,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-01-05T06:00:00",
+      "timestamp": "2026-04-01T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 2,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-01T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 16,
       "capacity": 32
     },
     {
-      "timestamp": "2031-01-05T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
+      "timestamp": "2026-04-01T06:00:00",
+      "ward": "General",
+      "occupied_beds": 0,
+      "capacity": 60
     },
     {
-      "timestamp": "2031-01-05T06:00:00",
-      "ward": "General",
+      "timestamp": "2026-04-01T06:00:00",
+      "ward": "Surgery",
+      "occupied_beds": 21,
+      "capacity": 28
+    },
+    {
+      "timestamp": "2026-04-01T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-02T06:00:00",
+      "ward": "ICU",
       "occupied_beds": 3,
-      "capacity": 68
+      "capacity": 24
     },
     {
-      "timestamp": "2031-01-05T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-05T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 21,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-06T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
+      "timestamp": "2026-04-02T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 13,
       "capacity": 32
     },
     {
-      "timestamp": "2031-01-06T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-06T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-06T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-06T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 21,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-07T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-07T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-07T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-07T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-07T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 20,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-08T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-08T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-08T06:00:00",
+      "timestamp": "2026-04-02T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-01-08T06:00:00",
+      "timestamp": "2026-04-02T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-08T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 19,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-09T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-09T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-09T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-09T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-09T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 19,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-10T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-10T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-10T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-10T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-10T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-11T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-11T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-11T06:00:00",
-      "ward": "General",
-      "occupied_beds": 2,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-11T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-11T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-12T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-12T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-12T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-12T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-12T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-13T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-13T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-13T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-13T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-13T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 17,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-14T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-14T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-14T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-14T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-14T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 17,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-15T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-15T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-15T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-15T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-15T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-16T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-16T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-16T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-16T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-16T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 19,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-17T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-17T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-17T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-17T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-17T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-18T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-18T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-18T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-18T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-18T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-19T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-19T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-19T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-19T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-19T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-20T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-20T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-20T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-20T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-20T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-21T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-21T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-21T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-21T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-21T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 19,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-22T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-22T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-22T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-22T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-22T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-23T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-23T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-23T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-23T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-23T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 19,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-24T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-24T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-24T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-24T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-24T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-25T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-25T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-25T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-25T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-25T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-26T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-26T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-26T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-26T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-26T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 17,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-27T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-27T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-27T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-27T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-27T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 17,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-28T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-28T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-28T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-28T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-28T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 18,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-29T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-29T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-29T06:00:00",
-      "ward": "General",
-      "occupied_beds": 2,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-29T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-29T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 19,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-01-30T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 29,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-01-30T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-30T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-01-30T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-30T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 22,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-01-31T06:00:00",
+      "timestamp": "2026-04-02T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-03T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 2,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-03T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 12,
       "capacity": 32
     },
     {
-      "timestamp": "2031-01-31T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 39,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-01-31T06:00:00",
+      "timestamp": "2026-04-03T06:00:00",
       "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
+      "occupied_beds": 1,
+      "capacity": 60
     },
     {
-      "timestamp": "2031-01-31T06:00:00",
+      "timestamp": "2026-04-03T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-01-31T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 23,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-01T06:00:00",
+      "timestamp": "2026-04-03T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-04T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 4,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-04T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 13,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-01T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-01T06:00:00",
+      "timestamp": "2026-04-04T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-01T06:00:00",
+      "timestamp": "2026-04-04T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
+      "occupied_beds": 21,
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-01T06:00:00",
+      "timestamp": "2026-04-04T06:00:00",
       "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
+      "occupied_beds": 0,
+      "capacity": 22
     },
     {
-      "timestamp": "2031-02-02T06:00:00",
+      "timestamp": "2026-04-05T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 4,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-05T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 10,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-02T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-02T06:00:00",
+      "timestamp": "2026-04-05T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-02T06:00:00",
+      "timestamp": "2026-04-05T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-02T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-03T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 30,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-03T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-03T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-03T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 34,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-03T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-04T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 30,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-04T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-04T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-04T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-04T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-05T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 30,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-05T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-05T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-05T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-05T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 23,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-06T06:00:00",
+      "timestamp": "2026-04-05T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-06T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 31,
+      "occupied_beds": 3,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-06T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 9,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-06T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-06T06:00:00",
+      "timestamp": "2026-04-06T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-06T06:00:00",
+      "timestamp": "2026-04-06T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-06T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 24,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-07T06:00:00",
+      "timestamp": "2026-04-06T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-07T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 4,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-07T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 9,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-07T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-07T06:00:00",
+      "timestamp": "2026-04-07T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-07T06:00:00",
+      "timestamp": "2026-04-07T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-07T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 24,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-08T06:00:00",
+      "timestamp": "2026-04-07T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-08T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 4,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-08T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 6,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-08T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
+      "timestamp": "2026-04-08T06:00:00",
+      "ward": "General",
+      "occupied_beds": 0,
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-08T06:00:00",
+      "timestamp": "2026-04-08T06:00:00",
+      "ward": "Surgery",
+      "occupied_beds": 24,
+      "capacity": 28
+    },
+    {
+      "timestamp": "2026-04-08T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-09T06:00:00",
+      "ward": "ICU",
+      "occupied_beds": 2,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-09T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 5,
+      "capacity": 32
+    },
+    {
+      "timestamp": "2026-04-09T06:00:00",
       "ward": "General",
       "occupied_beds": 1,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-08T06:00:00",
+      "timestamp": "2026-04-09T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-08T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 23,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-09T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-09T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-09T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-09T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-09T06:00:00",
+      "timestamp": "2026-04-09T06:00:00",
       "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
+      "occupied_beds": 0,
+      "capacity": 22
     },
     {
-      "timestamp": "2031-02-10T06:00:00",
+      "timestamp": "2026-04-10T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 0,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-10T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 3,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-10T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-10T06:00:00",
+      "timestamp": "2026-04-10T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-10T06:00:00",
+      "timestamp": "2026-04-10T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-10T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-11T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-11T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-11T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-11T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-11T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-12T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 31,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-12T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-12T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-12T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-12T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-13T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-13T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-13T06:00:00",
-      "ward": "General",
-      "occupied_beds": 1,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-13T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-13T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-14T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-14T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-14T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-14T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-14T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 26,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-15T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-15T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-15T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-15T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 36,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-15T06:00:00",
-      "ward": "Maternity",
-      "occupied_beds": 24,
-      "capacity": 26
-    },
-    {
-      "timestamp": "2031-02-16T06:00:00",
-      "ward": "ICU",
-      "occupied_beds": 32,
-      "capacity": 32
-    },
-    {
-      "timestamp": "2031-02-16T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-16T06:00:00",
-      "ward": "General",
-      "occupied_beds": 0,
-      "capacity": 68
-    },
-    {
-      "timestamp": "2031-02-16T06:00:00",
-      "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
-    },
-    {
-      "timestamp": "2031-02-16T06:00:00",
-      "ward": "Maternity",
       "occupied_beds": 23,
-      "capacity": 26
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-17T06:00:00",
+      "timestamp": "2026-04-10T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-11T06:00:00",
       "ward": "ICU",
-      "occupied_beds": 32,
+      "occupied_beds": 0,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-11T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 5,
       "capacity": 32
     },
     {
-      "timestamp": "2031-02-17T06:00:00",
-      "ward": "Emergency",
-      "occupied_beds": 40,
-      "capacity": 40
-    },
-    {
-      "timestamp": "2031-02-17T06:00:00",
+      "timestamp": "2026-04-11T06:00:00",
       "ward": "General",
       "occupied_beds": 0,
-      "capacity": 68
+      "capacity": 60
     },
     {
-      "timestamp": "2031-02-17T06:00:00",
+      "timestamp": "2026-04-11T06:00:00",
       "ward": "Surgery",
-      "occupied_beds": 35,
-      "capacity": 36
+      "occupied_beds": 24,
+      "capacity": 28
     },
     {
-      "timestamp": "2031-02-17T06:00:00",
+      "timestamp": "2026-04-11T06:00:00",
       "ward": "Maternity",
-      "occupied_beds": 23,
-      "capacity": 26
+      "occupied_beds": 0,
+      "capacity": 22
+    },
+    {
+      "timestamp": "2026-04-12T06:00:00",
+      "ward": "ICU",
+      "occupied_beds": 3,
+      "capacity": 24
+    },
+    {
+      "timestamp": "2026-04-12T06:00:00",
+      "ward": "Emergency",
+      "occupied_beds": 5,
+      "capacity": 32
+    },
+    {
+      "timestamp": "2026-04-12T06:00:00",
+      "ward": "General",
+      "occupied_beds": 0,
+      "capacity": 60
+    },
+    {
+      "timestamp": "2026-04-12T06:00:00",
+      "ward": "Surgery",
+      "occupied_beds": 27,
+      "capacity": 32
+    },
+    {
+      "timestamp": "2026-04-12T06:00:00",
+      "ward": "Maternity",
+      "occupied_beds": 0,
+      "capacity": 22
     }
   ]
 }

@@ -1,352 +1,450 @@
 [
-    {
-        "timestamp": "2026-03-23 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 17,
-        "capacity": 24,
-        "occupancy_rate": 0.708
-    },
-    {
-        "timestamp": "2026-03-24 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 15,
-        "capacity": 24,
-        "occupancy_rate": 0.625
-    },
-    {
-        "timestamp": "2026-03-25 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 18,
-        "capacity": 24,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-03-26 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 21,
-        "capacity": 24,
-        "occupancy_rate": 0.875
-    },
-    {
-        "timestamp": "2026-03-27 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 15,
-        "capacity": 24,
-        "occupancy_rate": 0.625
-    },
-    {
-        "timestamp": "2026-03-28 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 21,
-        "capacity": 24,
-        "occupancy_rate": 0.875
-    },
-    {
-        "timestamp": "2026-03-29 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 16,
-        "capacity": 24,
-        "occupancy_rate": 0.667
-    },
-    {
-        "timestamp": "2026-03-30 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 19,
-        "capacity": 24,
-        "occupancy_rate": 0.792
-    },
-    {
-        "timestamp": "2026-03-31 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 18,
-        "capacity": 24,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-04-01 06:00:00",
-        "ward": "ICU",
-        "occupied_beds": 22,
-        "capacity": 24,
-        "occupancy_rate": 0.917
-    },
-    {
-        "timestamp": "2026-03-23 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 28,
-        "capacity": 32,
-        "occupancy_rate": 0.875
-    },
-    {
-        "timestamp": "2026-03-24 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 28,
-        "capacity": 32,
-        "occupancy_rate": 0.875
-    },
-    {
-        "timestamp": "2026-03-25 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 22,
-        "capacity": 32,
-        "occupancy_rate": 0.688
-    },
-    {
-        "timestamp": "2026-03-26 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 25,
-        "capacity": 32,
-        "occupancy_rate": 0.781
-    },
-    {
-        "timestamp": "2026-03-27 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 24,
-        "capacity": 32,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-03-28 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 28,
-        "capacity": 32,
-        "occupancy_rate": 0.875
-    },
-    {
-        "timestamp": "2026-03-29 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 24,
-        "capacity": 32,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-03-30 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 26,
-        "capacity": 32,
-        "occupancy_rate": 0.812
-    },
-    {
-        "timestamp": "2026-03-31 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 24,
-        "capacity": 32,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-04-01 06:00:00",
-        "ward": "Emergency",
-        "occupied_beds": 22,
-        "capacity": 32,
-        "occupancy_rate": 0.688
-    },
-    {
-        "timestamp": "2026-03-23 06:00:00",
-        "ward": "General",
-        "occupied_beds": 42,
-        "capacity": 60,
-        "occupancy_rate": 0.7
-    },
-    {
-        "timestamp": "2026-03-24 06:00:00",
-        "ward": "General",
-        "occupied_beds": 42,
-        "capacity": 60,
-        "occupancy_rate": 0.7
-    },
-    {
-        "timestamp": "2026-03-25 06:00:00",
-        "ward": "General",
-        "occupied_beds": 40,
-        "capacity": 60,
-        "occupancy_rate": 0.667
-    },
-    {
-        "timestamp": "2026-03-26 06:00:00",
-        "ward": "General",
-        "occupied_beds": 35,
-        "capacity": 60,
-        "occupancy_rate": 0.583
-    },
-    {
-        "timestamp": "2026-03-27 06:00:00",
-        "ward": "General",
-        "occupied_beds": 40,
-        "capacity": 60,
-        "occupancy_rate": 0.667
-    },
-    {
-        "timestamp": "2026-03-28 06:00:00",
-        "ward": "General",
-        "occupied_beds": 35,
-        "capacity": 60,
-        "occupancy_rate": 0.583
-    },
-    {
-        "timestamp": "2026-03-29 06:00:00",
-        "ward": "General",
-        "occupied_beds": 37,
-        "capacity": 60,
-        "occupancy_rate": 0.617
-    },
-    {
-        "timestamp": "2026-03-30 06:00:00",
-        "ward": "General",
-        "occupied_beds": 39,
-        "capacity": 60,
-        "occupancy_rate": 0.65
-    },
-    {
-        "timestamp": "2026-03-31 06:00:00",
-        "ward": "General",
-        "occupied_beds": 35,
-        "capacity": 60,
-        "occupancy_rate": 0.583
-    },
-    {
-        "timestamp": "2026-04-01 06:00:00",
-        "ward": "General",
-        "occupied_beds": 42,
-        "capacity": 60,
-        "occupancy_rate": 0.7
-    },
-    {
-        "timestamp": "2026-03-23 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 16,
-        "capacity": 28,
-        "occupancy_rate": 0.571
-    },
-    {
-        "timestamp": "2026-03-24 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 22,
-        "capacity": 28,
-        "occupancy_rate": 0.786
-    },
-    {
-        "timestamp": "2026-03-25 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 23,
-        "capacity": 28,
-        "occupancy_rate": 0.821
-    },
-    {
-        "timestamp": "2026-03-26 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 20,
-        "capacity": 28,
-        "occupancy_rate": 0.714
-    },
-    {
-        "timestamp": "2026-03-27 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 21,
-        "capacity": 28,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-03-28 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 17,
-        "capacity": 28,
-        "occupancy_rate": 0.607
-    },
-    {
-        "timestamp": "2026-03-29 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 20,
-        "capacity": 28,
-        "occupancy_rate": 0.714
-    },
-    {
-        "timestamp": "2026-03-30 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 18,
-        "capacity": 28,
-        "occupancy_rate": 0.643
-    },
-    {
-        "timestamp": "2026-03-31 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 17,
-        "capacity": 28,
-        "occupancy_rate": 0.607
-    },
-    {
-        "timestamp": "2026-04-01 06:00:00",
-        "ward": "Surgery",
-        "occupied_beds": 21,
-        "capacity": 28,
-        "occupancy_rate": 0.75
-    },
-    {
-        "timestamp": "2026-03-23 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 11,
-        "capacity": 22,
-        "occupancy_rate": 0.5
-    },
-    {
-        "timestamp": "2026-03-24 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 17,
-        "capacity": 22,
-        "occupancy_rate": 0.773
-    },
-    {
-        "timestamp": "2026-03-25 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 17,
-        "capacity": 22,
-        "occupancy_rate": 0.773
-    },
-    {
-        "timestamp": "2026-03-26 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 18,
-        "capacity": 22,
-        "occupancy_rate": 0.818
-    },
-    {
-        "timestamp": "2026-03-27 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 18,
-        "capacity": 22,
-        "occupancy_rate": 0.818
-    },
-    {
-        "timestamp": "2026-03-28 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 11,
-        "capacity": 22,
-        "occupancy_rate": 0.5
-    },
-    {
-        "timestamp": "2026-03-29 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 18,
-        "capacity": 22,
-        "occupancy_rate": 0.818
-    },
-    {
-        "timestamp": "2026-03-30 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 13,
-        "capacity": 22,
-        "occupancy_rate": 0.591
-    },
-    {
-        "timestamp": "2026-03-31 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 12,
-        "capacity": 22,
-        "occupancy_rate": 0.545
-    },
-    {
-        "timestamp": "2026-04-01 06:00:00",
-        "ward": "Maternity",
-        "occupied_beds": 12,
-        "capacity": 22,
-        "occupancy_rate": 0.545
-    }
+  {
+    "timestamp": "2026-03-28 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 2,
+    "capacity": 24,
+    "occupancy_rate": 0.083
+  },
+  {
+    "timestamp": "2026-03-29 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 16,
+    "capacity": 32,
+    "occupancy_rate": 0.5
+  },
+  {
+    "timestamp": "2026-03-30 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-03-31 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 21,
+    "capacity": 28,
+    "occupancy_rate": 0.75
+  },
+  {
+    "timestamp": "2026-04-01 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 2,
+    "capacity": 24,
+    "occupancy_rate": 0.083
+  },
+  {
+    "timestamp": "2026-04-01 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 16,
+    "capacity": 32,
+    "occupancy_rate": 0.5
+  },
+  {
+    "timestamp": "2026-04-01 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-01 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 21,
+    "capacity": 28,
+    "occupancy_rate": 0.75
+  },
+  {
+    "timestamp": "2026-04-01 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-02 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 3,
+    "capacity": 24,
+    "occupancy_rate": 0.125
+  },
+  {
+    "timestamp": "2026-04-02 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 13,
+    "capacity": 32,
+    "occupancy_rate": 0.406
+  },
+  {
+    "timestamp": "2026-04-02 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-02 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 22,
+    "capacity": 28,
+    "occupancy_rate": 0.786
+  },
+  {
+    "timestamp": "2026-04-02 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-03 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 2,
+    "capacity": 24,
+    "occupancy_rate": 0.083
+  },
+  {
+    "timestamp": "2026-04-03 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 12,
+    "capacity": 32,
+    "occupancy_rate": 0.375
+  },
+  {
+    "timestamp": "2026-04-03 06:00:00",
+    "ward": "General",
+    "occupied_beds": 1,
+    "capacity": 60,
+    "occupancy_rate": 0.017
+  },
+  {
+    "timestamp": "2026-04-03 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 23,
+    "capacity": 28,
+    "occupancy_rate": 0.821
+  },
+  {
+    "timestamp": "2026-04-03 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-04 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 4,
+    "capacity": 24,
+    "occupancy_rate": 0.167
+  },
+  {
+    "timestamp": "2026-04-04 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 13,
+    "capacity": 32,
+    "occupancy_rate": 0.406
+  },
+  {
+    "timestamp": "2026-04-04 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-04 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 21,
+    "capacity": 28,
+    "occupancy_rate": 0.75
+  },
+  {
+    "timestamp": "2026-04-04 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-05 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 4,
+    "capacity": 24,
+    "occupancy_rate": 0.167
+  },
+  {
+    "timestamp": "2026-04-05 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 10,
+    "capacity": 32,
+    "occupancy_rate": 0.312
+  },
+  {
+    "timestamp": "2026-04-05 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-05 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 23,
+    "capacity": 28,
+    "occupancy_rate": 0.821
+  },
+  {
+    "timestamp": "2026-04-05 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-06 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 3,
+    "capacity": 24,
+    "occupancy_rate": 0.125
+  },
+  {
+    "timestamp": "2026-04-06 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 9,
+    "capacity": 32,
+    "occupancy_rate": 0.281
+  },
+  {
+    "timestamp": "2026-04-06 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-06 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 24,
+    "capacity": 28,
+    "occupancy_rate": 0.857
+  },
+  {
+    "timestamp": "2026-04-06 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-07 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 4,
+    "capacity": 24,
+    "occupancy_rate": 0.167
+  },
+  {
+    "timestamp": "2026-04-07 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 9,
+    "capacity": 32,
+    "occupancy_rate": 0.281
+  },
+  {
+    "timestamp": "2026-04-07 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-07 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 24,
+    "capacity": 28,
+    "occupancy_rate": 0.857
+  },
+  {
+    "timestamp": "2026-04-07 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-08 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 4,
+    "capacity": 24,
+    "occupancy_rate": 0.167
+  },
+  {
+    "timestamp": "2026-04-08 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 6,
+    "capacity": 32,
+    "occupancy_rate": 0.188
+  },
+  {
+    "timestamp": "2026-04-08 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-08 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 24,
+    "capacity": 28,
+    "occupancy_rate": 0.857
+  },
+  {
+    "timestamp": "2026-04-08 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-09 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 2,
+    "capacity": 24,
+    "occupancy_rate": 0.083
+  },
+  {
+    "timestamp": "2026-04-09 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 5,
+    "capacity": 32,
+    "occupancy_rate": 0.156
+  },
+  {
+    "timestamp": "2026-04-09 06:00:00",
+    "ward": "General",
+    "occupied_beds": 1,
+    "capacity": 60,
+    "occupancy_rate": 0.017
+  },
+  {
+    "timestamp": "2026-04-09 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 23,
+    "capacity": 28,
+    "occupancy_rate": 0.821
+  },
+  {
+    "timestamp": "2026-04-09 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-10 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 0,
+    "capacity": 24,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-10 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 3,
+    "capacity": 32,
+    "occupancy_rate": 0.094
+  },
+  {
+    "timestamp": "2026-04-10 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-10 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 23,
+    "capacity": 28,
+    "occupancy_rate": 0.821
+  },
+  {
+    "timestamp": "2026-04-10 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-11 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 0,
+    "capacity": 24,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-11 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 5,
+    "capacity": 32,
+    "occupancy_rate": 0.156
+  },
+  {
+    "timestamp": "2026-04-11 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-11 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 24,
+    "capacity": 28,
+    "occupancy_rate": 0.857
+  },
+  {
+    "timestamp": "2026-04-11 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-12 06:00:00",
+    "ward": "ICU",
+    "occupied_beds": 3,
+    "capacity": 24,
+    "occupancy_rate": 0.125
+  },
+  {
+    "timestamp": "2026-04-12 06:00:00",
+    "ward": "Emergency",
+    "occupied_beds": 5,
+    "capacity": 32,
+    "occupancy_rate": 0.156
+  },
+  {
+    "timestamp": "2026-04-12 06:00:00",
+    "ward": "General",
+    "occupied_beds": 0,
+    "capacity": 60,
+    "occupancy_rate": 0.0
+  },
+  {
+    "timestamp": "2026-04-12 06:00:00",
+    "ward": "Surgery",
+    "occupied_beds": 27,
+    "capacity": 32,
+    "occupancy_rate": 0.844
+  },
+  {
+    "timestamp": "2026-04-12 06:00:00",
+    "ward": "Maternity",
+    "occupied_beds": 0,
+    "capacity": 22,
+    "occupancy_rate": 0.0
+  }
 ]
