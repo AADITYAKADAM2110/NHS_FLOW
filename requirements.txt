@@ -4,3 +4,4 @@ pandas
 numpy
 streamlit
 altair<5
+plotly>=5.0.0

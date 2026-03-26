@@ -6,7 +6,7 @@ The project currently combines three main workflows:
 
 - A role-based Streamlit dashboard for hospital operations, staff assignment, and procurement
 - A CLI procurement flow with supervisor approval checkpoints
-- A mock data generator for beds, staff, equipment, suppliers, inventory, and occupancy history
+- A mock data generator for the current runtime datasets
 
 ## Current app overview
 
@@ -58,6 +58,18 @@ Relevant modules:
 ### Staff assignment
 
 Managers can reassign staff between wards and shifts through a dedicated tab in the Streamlit app. Assignments are persisted to `core/data/staff.json`.
+
+The staff views now distinguish between:
+
+- `Assigned Total`: all staff assigned to a ward
+- `Active Total`: staff whose status is `Available` or `On duty`
+- `Assigned Nurses` / `Assigned Doctors`: total assigned clinical headcount
+- `Active Nurses` / `Active Doctors`: currently active clinical headcount
+
+The Staff Assignment tab shows:
+
+- a ward staffing summary
+- the full current staff allocation list from `staff.json`
 
 Relevant module:
 
@@ -220,3 +232,4 @@ Declared dependencies across `requirements.txt` and `pyproject.toml` include:
 - `numpy`
 - `streamlit`
 - `altair<5`
+- `plotly`
