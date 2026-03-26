@@ -2,19 +2,27 @@ from __future__ import annotations
 
 from .helpers import refresh_ward_metrics
 from .state import sync_history_to_current_state
+from .staffing_sync import sync_staff_counts_to_wards
+from ..staff_ops import redeploy_staff_by_role
 
 
 def apply_emergency_staffing(state: dict) -> tuple[dict, str]:
     wards = []
     targeted = 0
+    moved_nurses = 0
+    moved_doctors = 0
     for ward in state["wards"]:
         updated = dict(ward)
         if updated["occupancy_rate"] >= 0.8 or updated["nurses_available"] < updated["required_nurses"]:
-            updated["nurses_available"] += 3
-            updated["doctors_available"] += 1
+            moved_nurses += redeploy_staff_by_role(updated["ward"], "nurse", 3)[0]
+            moved_doctors += redeploy_staff_by_role(updated["ward"], "doctor", 1)[0]
             targeted += 1
         wards.append(refresh_ward_metrics(updated))
-    return sync_history_to_current_state({**state, "wards": wards}), f"Emergency staffing pool deployed to {targeted} ward(s)."
+    wards = sync_staff_counts_to_wards(wards)
+    return (
+        sync_history_to_current_state({**state, "wards": wards}),
+        f"Emergency staffing redeployed {moved_nurses} nurse(s) and {moved_doctors} doctor(s) across {targeted} ward(s).",
+    )
 
 
 def apply_emergency_capacity(state: dict) -> tuple[dict, str]:

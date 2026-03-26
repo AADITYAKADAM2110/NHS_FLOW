@@ -1,0 +1,30 @@
+[
+  {
+    "user_id": "NUR-1001",
+    "password": "nurse123",
+    "name": "Asha Nurse",
+    "role": "nurse",
+    "ward": "Emergency"
+  },
+  {
+    "user_id": "STF-1001",
+    "password": "staff123",
+    "name": "Ravi Staff",
+    "role": "staff",
+    "ward": "General"
+  },
+  {
+    "user_id": "MGR-1001",
+    "password": "manager123",
+    "name": "Priya Manager",
+    "role": "manager",
+    "ward": "Operations"
+  },
+  {
+    "user_id": "PRO-1001",
+    "password": "procure123",
+    "name": "Neha Procurement",
+    "role": "procurement_officer",
+    "ward": "Procurement"
+  }
+]

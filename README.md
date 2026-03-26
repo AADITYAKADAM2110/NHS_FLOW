@@ -1,26 +1,90 @@
 # NHS-FLOW
 
-NHS-FLOW is a Python project for simulating hospital operations and coordinating medical supply procurement with OpenAI-powered agents. The repository includes a Streamlit command center, a CLI workflow, and a dataset generator for mock NHS-style operational data.
+NHS-FLOW is a Python hospital operations and procurement simulator built around a Streamlit control center, JSON-backed mock datasets, and lightweight OpenAI-powered procurement agents.
 
-## What the project includes
+The project currently combines three main workflows:
 
-- A `Streamlit` dashboard in `app.py` with two views:
-  - Live Operations Dashboard for bed occupancy, ward pressure, forecasts, and emergency actions
-  - Procurement Workflow for shortage detection, supplier lookup, email drafting, and inventory updates
-- A CLI workflow in `main.py` that runs the same procurement flow with supervisor approval steps
-- A synthetic data generator in `generate_data.py` that creates inventory, supplier, bed, staff, equipment, and occupancy-history JSON files
-- OpenAI agent definitions in `core/agents/saved_agents.py`
-- Supporting procurement tools in `core/tools`
+- A role-based Streamlit dashboard for hospital operations, staff assignment, and procurement
+- A CLI procurement flow with supervisor approval checkpoints
+- A mock data generator for beds, staff, equipment, suppliers, inventory, and occupancy history
 
-## Features
+## Current app overview
 
-- Simulated ward capacity tracking across ICU, Emergency, General, Surgery, and Maternity
-- Forecasting for next-day average and peak occupancy
-- Operational recommendations with optional AI-generated explanations
-- Emergency actions such as extra staffing, opening extra beds, and full stabilization
-- Inventory audit for critical shortages
-- Supplier matching with NHS approval and delivery-time data
-- Order staging, receipt generation, and supplier email drafting
+The main entry point is [app.py](/c:/Users/DELL/Desktop/NHS_FLOW/app.py). After login, users see different parts of the system depending on their role.
+
+### Roles
+
+- `staff`: can view the hospital map, bed/equipment status, and edit ward bed/equipment values
+- `nurse`: same access as staff
+- `manager`: full access to operations, simulation controls, forecasts, recommendations, staff assignment, and procurement
+- `procurement_officer`: access to the procurement workflow only
+
+Role definitions and demo credentials are stored in [core/auth.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/auth.py) and [core/data/users.json](/c:/Users/DELL/Desktop/NHS_FLOW/core/data/users.json).
+
+### Operations dashboard
+
+The operations side combines real-time style simulation with manual updates:
+
+- Hospital map with ward-level occupancy and equipment visibility
+- Bed and equipment tables
+- Ward editing for beds and equipment
+- Manager-only simulation controls
+- Manager-only forecasting and occupancy trends
+- Manager-only operational recommendations and emergency actions
+- Manager-only recommended resource positioning view
+
+The operational runtime uses a small set of JSON files under `core/data/`:
+
+- `realtime_state.json` for live ward, bed, equipment, forecast, and simulation state
+- `staff.json` for staff assignment and staffing availability
+- `suppliers.json` for supplier data
+- `inventory.json` for stock data
+- `users.json` for login accounts and roles
+
+Meaning of staffing terms:
+
+- `assigned`: total staff assigned to a ward in `staff.json`
+- `active` or `available`: staff in `Available` or `On duty` status
+- `required`: staffing demand calculated from current occupied beds in `realtime_state.json`
+
+Relevant modules:
+
+- [core/realtime/state.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/realtime/state.py)
+- [core/realtime/simulation.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/realtime/simulation.py)
+- [core/realtime/manual_ops.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/realtime/manual_ops.py)
+- [core/realtime/snapshot.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/realtime/snapshot.py)
+- [core/realtime/map_data.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/realtime/map_data.py)
+
+### Staff assignment
+
+Managers can reassign staff between wards and shifts through a dedicated tab in the Streamlit app. Assignments are persisted to `core/data/staff.json`.
+
+Relevant module:
+
+- [core/staff_ops.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/staff_ops.py)
+
+### Procurement workflow
+
+The procurement flow supports:
+
+- inventory audit for shortages
+- supplier lookup for NHS-approved vendors
+- order staging
+- draft email generation
+- inventory update after confirmation
+
+This workflow exists in both:
+
+- the Streamlit dashboard in [app.py](/c:/Users/DELL/Desktop/NHS_FLOW/app.py)
+- the CLI supervisor flow in [main.py](/c:/Users/DELL/Desktop/NHS_FLOW/main.py)
+
+Relevant modules:
+
+- [core/agents/core_agent.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/agents/core_agent.py)
+- [core/agents/saved_agents.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/agents/saved_agents.py)
+- [core/tools/check_stock_function.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/tools/check_stock_function.py)
+- [core/tools/get_supplier_function.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/tools/get_supplier_function.py)
+- [core/tools/place_order.py](/c:/Users/DELL/Desktop/NHS_FLOW/core/tools/place_order.py)
 
 ## Project structure
 
@@ -30,19 +94,22 @@ NHS_FLOW/
 |- main.py
 |- generate_data.py
 |- requirements.txt
-|- .env
+|- pyproject.toml
 `- core/
    |- agents/
    |- data/
-   |- realtime_ops.py
-   |- session_variables/
-   `- tools/
+   |- realtime/
+   |- tools/
+   |- auth.py
+   |- staff_ops.py
+   `- realtime_ops.py
 ```
 
 ## Requirements
 
 - Python 3.12+
-- An OpenAI API key in `.env`
+- A virtual environment is recommended
+- `OPENAI_API_KEY` in `.env` if you want OpenAI-backed procurement and AI recommendation features
 
 Example `.env`:
 
@@ -68,44 +135,84 @@ uv sync
 
 ## Generate mock data
 
-Run the generator to create fresh JSON datasets:
+To regenerate the demo datasets:
 
 ```bash
 python generate_data.py
 ```
 
-This writes files such as:
+This writes:
 
 - `core/data/inventory.json`
 - `core/data/suppliers.json`
-- `core/data/beds.json`
 - `core/data/staff.json`
-- `core/data/equipment.json`
-- `core/data/occupancy_history.json`
+- `core/data/realtime_state.json`
 
-## Run the app
-
-Start the Streamlit dashboard:
+## Run the Streamlit app
 
 ```bash
 streamlit run app.py
 ```
 
-Start the CLI workflow:
+### Demo login accounts
+
+The current app ships with JSON-backed demo users:
+
+- Manager: `MGR-1001` / `manager123`
+- Nurse: `NUR-1001` / `nurse123`
+- Staff: `STF-1001` / `staff123`
+- Procurement Officer: `PRO-1001` / `procure123`
+
+## Run the CLI procurement flow
 
 ```bash
 python main.py
 ```
 
-## Notes
+This runs a terminal-based approval flow where the system:
 
-- The main user experience is the Streamlit app in `app.py`.
-- The live operations board uses a simulated hospital clock and refresh cycle defined in `core/realtime_ops.py`.
-- The repository currently contains some legacy hard-coded data paths in older helper files. The dataset generator itself writes to `core/data/`.
+1. audits stock
+2. finds suppliers
+3. pauses for supervisor approval
+4. stages orders
+5. drafts supplier email text
+6. updates inventory on confirmation
+
+## Forecasting and recommendations
+
+The operations forecast layer currently uses a lightweight linear regression approach with a trend term and weekly seasonality term. The display label is defined as:
+
+- `Linear regression with trend + weekly seasonality`
+
+Operational recommendations can come from:
+
+- rules-based gap detection
+- OpenAI-generated structured recommendations when available
+
+When OpenAI is unavailable, the app falls back to deterministic rules.
+
+## Data notes
+
+The project is JSON-backed and intended for simulation/demo use. The app reads and writes directly to files in `core/data/`.
+
+Current runtime datasets:
+
+- `inventory.json`
+- `suppliers.json`
+- `staff.json`
+- `realtime_state.json`
+- `users.json`
+
+## Known limitations
+
+- Login uses plain-text passwords in `core/data/users.json`, which is acceptable for a prototype but not production-safe.
+- Some older helper modules still contain legacy path assumptions or older comments, especially in `core/session_variables/session_variables.py`.
+- The system uses mock data and JSON persistence rather than a real database.
+- Procurement and AI recommendation behavior depends on an OpenAI API key and compatible library access.
 
 ## Dependencies
 
-The project currently uses:
+Declared dependencies across `requirements.txt` and `pyproject.toml` include:
 
 - `openai`
 - `python-dotenv`

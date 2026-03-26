@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from .constants import HISTORY_LIMIT, SIMULATION_START, SIMULATION_STEP_HOURS, UPDATE_INTERVAL_SECONDS
 from .helpers import history_entry, hour_pressure, refresh_ward_metrics
 from .models import WARD_PROFILES
+from .staffing_sync import sync_staff_counts_to_wards
 
 
 
@@ -28,7 +29,7 @@ def simulate_realtime(state: dict, now: datetime | None = None, force_step: bool
     for _ in range(steps):
         timestamp += timedelta(seconds=UPDATE_INTERVAL_SECONDS)
         simulated_timestamp += timedelta(hours=SIMULATION_STEP_HOURS)
-        wards = [simulate_ward_step(ward, simulated_timestamp) for ward in wards]
+        wards = sync_staff_counts_to_wards([simulate_ward_step(ward, simulated_timestamp) for ward in wards])
         history.extend(history_entry(simulated_timestamp, ward) for ward in wards)
     return {
         "last_updated": timestamp,
@@ -57,7 +58,5 @@ def simulate_ward_step(ward: dict, simulated_timestamp: datetime) -> dict:
         "occupied_beds": max(0, min(ward["capacity"], ward["occupied_beds"] + admissions - discharges)),
         "admissions_last_hour": admissions,
         "discharges_last_hour": discharges,
-        "nurses_available": max(2, ward["nurses_available"] + seeded_random.randint(-1, 1)),
-        "doctors_available": max(1, ward["doctors_available"] + seeded_random.choice([0, 0, 1, -1])),
     }
     return refresh_ward_metrics(updated)

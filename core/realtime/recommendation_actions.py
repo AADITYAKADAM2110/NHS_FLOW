@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from .helpers import refresh_ward_metrics
 from .state import sync_history_to_current_state
+from .staffing_sync import sync_staff_counts_to_wards
+from ..staff_ops import redeploy_staff_by_role
 
 
 def apply_recommendation_action(state: dict, recommendation) -> tuple[dict, str]:
@@ -23,11 +25,15 @@ def apply_recommendation_action(state: dict, recommendation) -> tuple[dict, str]
     ward = dict(wards[target_index])
     applied_message = "Recommendation noted, but no direct simulation change was applied."
     if action_type == "assign_nurses":
-        ward["nurses_available"] += amount
-        applied_message = f"Assigned {amount} nurses to {ward_name}."
+        moved, donor_wards = redeploy_staff_by_role(ward_name, "nurse", amount)
+        applied_message = f"Redeployed {moved} nurse(s) to {ward_name}."
+        if donor_wards:
+            applied_message += f" Source ward(s): {', '.join(sorted(set(donor_wards)))}."
     elif action_type == "add_doctors":
-        ward["doctors_available"] += amount
-        applied_message = f"Assigned {amount} doctor(s) to {ward_name}."
+        moved, donor_wards = redeploy_staff_by_role(ward_name, "doctor", amount)
+        applied_message = f"Redeployed {moved} doctor(s) to {ward_name}."
+        if donor_wards:
+            applied_message += f" Source ward(s): {', '.join(sorted(set(donor_wards)))}."
     elif action_type == "redeploy_ventilators":
         ward["ventilators_available"] += amount
         applied_message = f"Redeployed {amount} ventilator(s) to {ward_name}."
@@ -43,14 +49,19 @@ def apply_recommendation_action(state: dict, recommendation) -> tuple[dict, str]
         ward["occupied_beds"] = max(0, ward["occupied_beds"] - 2)
         applied_message = f"Added discharge support to {ward_name}; reduced occupancy by 2 beds."
     elif action_type == "preposition_staff":
-        ward["nurses_available"] += 1
-        ward["doctors_available"] += 1
+        moved_nurses, donor_nurses = redeploy_staff_by_role(ward_name, "nurse", 1)
+        moved_doctors, donor_doctors = redeploy_staff_by_role(ward_name, "doctor", 1)
         ward["occupied_beds"] = max(0, ward["occupied_beds"] - 1)
-        applied_message = f"Pre-positioned staff for {ward_name} and relieved 1 occupied bed."
+        moved_total = moved_nurses + moved_doctors
+        donor_wards = sorted(set(donor_nurses + donor_doctors))
+        applied_message = f"Pre-positioned {moved_total} staff member(s) for {ward_name} and relieved 1 occupied bed."
+        if donor_wards:
+            applied_message += f" Source ward(s): {', '.join(donor_wards)}."
     elif action_type == "overflow_standby":
         ward["occupied_beds"] = max(0, ward["occupied_beds"] - 2)
         applied_message = f"Placed overflow plan on standby for {ward_name}; relieved 2 occupied beds."
     wards[target_index] = refresh_ward_metrics(ward)
+    wards = sync_staff_counts_to_wards(wards)
     return sync_history_to_current_state({**state, "wards": wards}), applied_message
 
 

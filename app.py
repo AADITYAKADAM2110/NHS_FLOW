@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from core.agents.saved_agents import communication_officer, manager
+from core.auth import authenticate_user, has_permission, load_users, role_label
 from core.realtime_ops import (
     FORECAST_MODEL_NAME,
     UPDATE_INTERVAL_SECONDS,
@@ -26,6 +27,8 @@ from core.realtime_ops import (
     simulate_realtime,
     update_ward_state,
 )
+from core.realtime.staffing_sync import sync_staff_counts_to_wards
+from core.staff_ops import assign_staff_member, load_staff_records, summarize_staff_by_ward
 from core.tools.place_order import place_order
 
 load_dotenv()
@@ -63,6 +66,35 @@ def init_session():
         st.session_state.operation_message = ""
     if "skip_realtime_refresh_once" not in st.session_state:
         st.session_state.skip_realtime_refresh_once = False
+    if "auth_user" not in st.session_state:
+        st.session_state.auth_user = None
+    if "login_error" not in st.session_state:
+        st.session_state.login_error = ""
+    restore_auth_from_query()
+
+
+def get_query_params() -> dict:
+    if hasattr(st, "experimental_get_query_params"):
+        return st.experimental_get_query_params()
+    return {}
+
+
+def set_query_params(**params):
+    if hasattr(st, "experimental_set_query_params"):
+        st.experimental_set_query_params(**params)
+
+
+def restore_auth_from_query():
+    if st.session_state.get("auth_user"):
+        return
+    query_params = get_query_params()
+    user_ids = query_params.get("user")
+    if not user_ids:
+        return
+    remembered_id = user_ids[0]
+    user = next((row for row in load_users() if row.get("user_id") == remembered_id), None)
+    if user:
+        st.session_state.auth_user = user
 
 
 def refresh_realtime_state():
@@ -82,6 +114,15 @@ def reset_session():
     st.session_state.workflow_state = build_initial_state()
     st.session_state.agent_trace = []
     st.session_state.last_report = ""
+
+
+def logout():
+    st.session_state.auth_user = None
+    st.session_state.login_error = ""
+    reset_session()
+    st.session_state.operation_message = ""
+    set_query_params()
+    rerun_app()
 
 
 def reset_operations():
@@ -424,7 +465,7 @@ def render_auto_refresh():
             key="auto_refresh_checkbox",
             value=st.session_state.auto_refresh,
             disabled=disabled,
-        )
+        ) 
         if st.session_state.auto_refresh_checkbox != st.session_state.auto_refresh:
             st.session_state.auto_refresh = st.session_state.auto_refresh_checkbox
             rerun_app()
@@ -472,6 +513,85 @@ def render_operations_summary(snapshot):
         """,
         unsafe_allow_html=True,
     )
+
+
+def render_basic_operations_tables(snapshot):
+    equipment_frame = snapshot[
+        [
+            "Ward",
+            "Occupied Beds",
+            "Capacity",
+            "Available Beds",
+            "Ventilators Available",
+            "Monitors Available",
+        ]
+    ]
+    render_table_card(
+        "Beds and Equipment",
+        equipment_frame,
+        highlight_rules=[
+            lambda row, column: column == "Available Beds" and int(row[column]) <= 2,
+        ],
+    )
+
+
+def render_login():
+    st.markdown(
+        """
+        <div class="nhs-card">
+            <strong>Secure Login</strong>
+            <p>Sign in with your staff ID and password to open the role-based dashboard.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    with st.form("login-form"):
+        user_id = st.text_input("Staff ID")
+        password = st.text_input("Password", type="password")
+        submitted = st.form_submit_button("Log In", use_container_width=True)
+
+    if submitted:
+        user = authenticate_user(user_id, password)
+        if user:
+            st.session_state.auth_user = user
+            st.session_state.login_error = ""
+            set_query_params(user=user.get("user_id", ""))
+            rerun_app()
+        else:
+            st.session_state.login_error = "Invalid staff ID or password."
+
+    if st.session_state.login_error:
+        st.error(st.session_state.login_error)
+
+    demo_accounts = pd.DataFrame(
+        [
+            {"Role": "Nurse", "ID": "NUR-1001", "Password": "nurse123"},
+            {"Role": "Staff", "ID": "STF-1001", "Password": "staff123"},
+            {"Role": "Manager", "ID": "MGR-1001", "Password": "manager123"},
+            {"Role": "Procurement Officer", "ID": "PRO-1001", "Password": "procure123"},
+        ]
+    )
+    st.caption("Demo accounts for this prototype")
+    render_table_card("Available Logins", demo_accounts)
+
+
+def render_user_banner():
+    user = st.session_state.auth_user
+    if not user:
+        return
+    left, right = st.columns([4, 1])
+    with left:
+        st.caption(
+            f"Signed in as {user.get('name', user.get('user_id', 'User'))} | "
+            f"{role_label(user.get('role', ''))} | ID {user.get('user_id', '')}"
+        )
+    with right:
+        if st.button("Log Out", use_container_width=True):
+            logout()
+
+
+def show_access_denied(message: str):
+    st.info(message)
 
 
 def render_operations_controls():
@@ -528,10 +648,14 @@ def render_emergency_controls():
             apply_and_persist_operations_action(apply_full_emergency_stabilization)
 
 
-def render_real_mode_editor():
-    if st.session_state.realtime_state.get("operation_mode") != "real":
+def render_real_mode_editor(advanced_access: bool = True):
+    if advanced_access and st.session_state.realtime_state.get("operation_mode") != "real":
         return
-    st.subheader("Real Mode Ward Updates")
+    st.subheader("Ward Updates")
+    if advanced_access:
+        st.caption("Real mode editing is active for beds and equipment. Staffing now comes from the Staff Assignment dataset.")
+    else:
+        st.caption("Update ward beds and equipment directly from the live hospital view.")
     wards = st.session_state.realtime_state["wards"]
     ward_names = [ward["ward"] for ward in wards]
     selected_ward = st.selectbox("Select ward to update", ward_names, key="real_mode_ward")
@@ -544,8 +668,8 @@ def render_real_mode_editor():
             capacity = st.number_input("Total beds", min_value=1, value=int(ward["capacity"]), step=1)
         with col2:
             occupied_beds = st.number_input("Occupied beds", min_value=0, value=int(ward["occupied_beds"]), step=1)
-            nurses_available = st.number_input("Nurses available", min_value=0, value=int(ward["nurses_available"]), step=1)
-            doctors_available = st.number_input("Doctors available", min_value=0, value=int(ward["doctors_available"]), step=1)
+            st.metric("Nurses available", int(ward["nurses_available"]))
+            st.metric("Doctors available", int(ward["doctors_available"]))
         with col3:
             ventilators_available = st.number_input("Ventilators available", min_value=0, value=int(ward["ventilators_available"]), step=1)
             monitors_available = st.number_input("Monitors available", min_value=0, value=int(ward["monitors_available"]), step=1)
@@ -556,8 +680,6 @@ def render_real_mode_editor():
             "discharges": discharges,
             "capacity": capacity,
             "occupied_beds": occupied_beds,
-            "nurses_available": nurses_available,
-            "doctors_available": doctors_available,
             "ventilators_available": ventilators_available,
             "monitors_available": monitors_available,
         }
@@ -699,7 +821,7 @@ def render_operations_charts(history):
     render_ward_trend(history)
 
 
-def render_hospital_map(snapshot):
+def render_hospital_map(snapshot, detailed: bool = True):
     st.subheader("Hospital Map")
     zones = build_hospital_map(snapshot)
     if not zones:
@@ -744,59 +866,92 @@ def render_hospital_map(snapshot):
     st.caption("Hover a ward for quick metrics. Use the selector below for the full table-backed detail view.")
     selected_zone = next(zone for zone in zones if zone["ward"] == selected_ward)
     details = selected_zone["details"]
-    st.markdown(
-        f"""
-        <div class="nhs-card">
-            <strong>{selected_ward} Detail</strong>
-            <div class="metric-strip">
-                <div class="metric-card">
-                    <div class="label">Occupied Beds</div>
-                    <div class="value">{details['Occupied Beds']}/{details['Capacity']}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Occupancy</div>
-                    <div class="value">{details['Occupancy %']:.1f}%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Staff On Ward</div>
-                    <div class="value">{details['Staff Total']}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Predicted Peak</div>
-                    <div class="value">{details['Predicted Peak Tomorrow']}</div>
+    if detailed:
+        st.markdown(
+            f"""
+            <div class="nhs-card">
+                <strong>{selected_ward} Detail</strong>
+                <div class="metric-strip">
+                    <div class="metric-card">
+                        <div class="label">Occupied Beds</div>
+                        <div class="value">{details['Occupied Beds']}/{details['Capacity']}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Occupancy</div>
+                        <div class="value">{details['Occupancy %']:.1f}%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Staff On Ward</div>
+                        <div class="value">{details['Staff Total']}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Predicted Peak</div>
+                        <div class="value">{details['Predicted Peak Tomorrow']}</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f"""
+            <div class="nhs-card">
+                <strong>{selected_ward} Detail</strong>
+                <div class="metric-strip">
+                    <div class="metric-card">
+                        <div class="label">Occupied Beds</div>
+                        <div class="value">{details['Occupied Beds']}/{details['Capacity']}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Available Beds</div>
+                        <div class="value">{details['Capacity'] - details['Occupied Beds']}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Ventilators</div>
+                        <div class="value">{details['Ventilators Available']}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Monitors</div>
+                        <div class="value">{details['Monitors Available']}</div>
+                    </div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        equipment_frame = pd.DataFrame(
+            [
+                {"Metric": "Occupied Beds", "Value": details["Occupied Beds"]},
+                {"Metric": "Total Beds", "Value": details["Capacity"]},
+                {"Metric": "Available Beds", "Value": details["Capacity"] - details["Occupied Beds"]},
+                {"Metric": "Ventilators Available", "Value": details["Ventilators Available"]},
+                {"Metric": "Monitors Available", "Value": details["Monitors Available"]},
+            ]
+        )
+        render_table_card(f"{selected_ward} Beds and Equipment", equipment_frame)
+        return
     staffing_frame = pd.DataFrame(
         [
-            {"Metric": "Admissions/hr", "Value": details["Admissions/hr"]},
-            {"Metric": "Discharges/hr", "Value": details["Discharges/hr"]},
-            {"Metric": "Nurses Available", "Value": details["Nurses Available"]},
-            {"Metric": "Nurses Required", "Value": details["Nurses Required"]},
-            {"Metric": "Doctors Available", "Value": details["Doctors Available"]},
-            {"Metric": "Doctors Required", "Value": details["Doctors Required"]},
-            {"Metric": "Staff Nurses", "Value": details["Staff Nurses"]},
-            {"Metric": "Staff Doctors", "Value": details["Staff Doctors"]},
+            {"Category": "Capacity", "Beds Occupied": details["Occupied Beds"], "Total Beds": details["Capacity"], "Occupancy %": f"{details['Occupancy %']:.1f}%"},
+            {"Category": "Patient Flow", "Admissions/hr": details["Admissions/hr"], "Discharges/hr": details["Discharges/hr"], "Occupancy %": "-"},
+            {"Category": "Staffing", "Total Staff": details["Staff Total"], "Active Clinical": details["Nurses Available"] + details["Doctors Available"], "Support Staff": details.get("Staff Support", 0)},
+            {"Category": "Nurses", "Active": details["Nurses Available"], "Assigned": details["Staff Nurses"], "Required": details["Nurses Required"]},
+            {"Category": "Doctors", "Active": details["Doctors Available"], "Assigned": details["Staff Doctors"], "Required": details["Doctors Required"]},
         ]
     )
     equipment_frame = pd.DataFrame(
         [
-            {"Metric": "Predicted Avg Tomorrow", "Value": details["Predicted Avg Tomorrow"]},
-            {"Metric": "Predicted Peak Tomorrow", "Value": details["Predicted Peak Tomorrow"]},
-            {"Metric": "Ventilators Available", "Value": details["Ventilators Available"]},
-            {"Metric": "Ventilators Required", "Value": details["Ventilators Required"]},
-            {"Metric": "Monitors Available", "Value": details["Monitors Available"]},
-            {"Metric": "Monitors Required", "Value": details["Monitors Required"]},
+            {"Resource": "Beds", "Available": details["Capacity"] - details["Occupied Beds"], "Current": details["Occupied Beds"], "Total": details["Capacity"]},
+            {"Resource": "Predicted Avg Tomorrow", "Available": details["Predicted Avg Tomorrow"], "Current": "-", "Total": details["Capacity"]},
+            {"Resource": "Predicted Peak Tomorrow", "Available": details["Predicted Peak Tomorrow"], "Current": "-", "Total": details["Capacity"]},
+            {"Resource": "Ventilators", "Available": details["Ventilators Available"], "Current": "-", "Total": details["Ventilators Required"]},
+            {"Resource": "Monitors", "Available": details["Monitors Available"], "Current": "-", "Total": details["Monitors Required"]},
         ]
     )
-    left, right = st.columns(2, gap="large")
-    with left:
-        render_table_card(f"{selected_ward} Staffing Flow", staffing_frame)
-    with right:
-        render_table_card(f"{selected_ward} Equipment and Forecast", equipment_frame)
+    render_table_card(f"{selected_ward} Staffing Flow", staffing_frame)
+    st.write("")
+    render_table_card(f"{selected_ward} Resource Positioning", equipment_frame)
 
 
 def render_operations_tables(snapshot, simulation_now):
@@ -822,64 +977,75 @@ def render_operations_tables(snapshot, simulation_now):
     )
     st.caption(f"Forecast columns reflect the simulated next day: {forecast_date}.")
     st.write("")
+    
+    # Simplified Recommended Resource Positioning table - clear data, no complexity
+    st.caption("Active staff comes from the Staff Assignment dataset. Required staff is calculated from current occupied beds.")
+    
+    # Build simplified resource positioning dataframe
+    resource_data = []
+    for _, row in snapshot.iterrows():
+        resource_data.append({
+            "Ward": row["Ward"],
+            "Occupancy %": f"{float(row['Occupancy %']):.1f}%",
+            "Nurses Active/Req": f"{int(row['Nurses Available'])}/{int(row['Nurses Required'])}",
+            "Doctors Active/Req": f"{int(row['Doctors Available'])}/{int(row['Doctors Required'])}",
+            "Support Staff": int(row.get("Staff Support", 0)),
+            "Ventilators Avl/Req": f"{int(row['Ventilators Available'])}/{int(row['Ventilators Required'])}",
+            "Monitors Avl/Req": f"{int(row['Monitors Available'])}/{int(row['Monitors Required'])}",
+        })
+    
+    resource_df = pd.DataFrame(resource_data)
     render_table_card(
         "Recommended Resource Positioning",
-        snapshot[
-            [
-                "Ward",
-                "Nurses Available",
-                "Nurses Required",
-                "Doctors Available",
-                "Doctors Required",
-                "Ventilators Available",
-                "Ventilators Required",
-                "Monitors Available",
-                "Monitors Required",
-            ]
-        ],
+        resource_df,
         highlight_rules=[
-            lambda row, column: column == "Nurses Available" and int(row["Nurses Available"]) < int(row["Nurses Required"]),
-            lambda row, column: column == "Nurses Required" and int(row["Nurses Available"]) < int(row["Nurses Required"]),
-            lambda row, column: column == "Doctors Available" and int(row["Doctors Available"]) < int(row["Doctors Required"]),
-            lambda row, column: column == "Doctors Required" and int(row["Doctors Available"]) < int(row["Doctors Required"]),
-            lambda row, column: column == "Ventilators Available" and int(row["Ventilators Available"]) < int(row["Ventilators Required"]),
-            lambda row, column: column == "Ventilators Required" and int(row["Ventilators Available"]) < int(row["Ventilators Required"]),
-            lambda row, column: column == "Monitors Available" and int(row["Monitors Available"]) < int(row["Monitors Required"]),
-            lambda row, column: column == "Monitors Required" and int(row["Monitors Available"]) < int(row["Monitors Required"]),
+            lambda row, column: "/" in str(row[column]) and column.startswith("Nurses") and int(str(row[column]).split("/")[0]) < int(str(row[column]).split("/")[1]),
+            lambda row, column: "/" in str(row[column]) and column.startswith("Doctors") and int(str(row[column]).split("/")[0]) < int(str(row[column]).split("/")[1]),
+            lambda row, column: "/" in str(row[column]) and column.startswith("Ventilators") and int(str(row[column]).split("/")[0]) < int(str(row[column]).split("/")[1]),
+            lambda row, column: "/" in str(row[column]) and column.startswith("Monitors") and int(str(row[column]).split("/")[0]) < int(str(row[column]).split("/")[1]),
         ],
     )
 
 
 def render_operations_tab():
+    if not has_permission(st.session_state.auth_user, "operations_view"):
+        show_access_denied("Your role does not have access to the live operations dashboard.")
+        return
+    advanced_access = has_permission(st.session_state.auth_user, "operations_advanced")
     snapshot, history, alerts = build_operational_snapshot(st.session_state.realtime_state)
     save_realtime_state(st.session_state.realtime_state)
     simulation_now = st.session_state.realtime_state.get("simulation_now", st.session_state.realtime_state["last_updated"])
     render_operations_summary(snapshot)
-    st.caption(f"Prediction model: {FORECAST_MODEL_NAME}")
+    if advanced_access:
+        st.caption(f"Prediction model: {FORECAST_MODEL_NAME}")
     if st.session_state.operation_message:
         st.success(st.session_state.operation_message)
     st.write("")
-    render_operations_controls()
-    st.write("")
-    render_real_mode_editor()
-    if st.session_state.realtime_state.get("operation_mode") == "real":
+    if advanced_access:
+        render_operations_controls()
         st.write("")
-    render_hospital_map(snapshot)
+    render_real_mode_editor(advanced_access=advanced_access)
+    if advanced_access and st.session_state.realtime_state.get("operation_mode") == "real":
+        st.write("")
+    render_hospital_map(snapshot, detailed=advanced_access)
     st.write("")
-    if st.session_state.realtime_state.get("operation_mode") != "real":
+    if advanced_access and st.session_state.realtime_state.get("operation_mode") != "real":
         render_emergency_controls()
         st.write("")
-    left, right = st.columns([1.15, 0.85], gap="large")
-    with left:
-        render_operations_charts(history)
-    with right:
-        render_operations_alerts(alerts, snapshot, simulation_now)
-    st.write("")
-    render_operations_tables(snapshot, simulation_now)
-    st.caption(
-        f"Hospital time: {simulation_now.strftime('%d %b %Y %H:%M')} | "
-        f"Mode: {st.session_state.realtime_state.get('operation_mode', 'simulation').title()}"
-    )
+    if advanced_access:
+        left, right = st.columns([1.15, 0.85], gap="large")
+        with left:
+            render_operations_charts(history)
+        with right:
+            render_operations_alerts(alerts, snapshot, simulation_now)
+        st.write("")
+        render_operations_tables(snapshot, simulation_now)
+        st.caption(
+            f"Hospital time: {simulation_now.strftime('%d %b %Y %H:%M')} | "
+            f"Mode: {st.session_state.realtime_state.get('operation_mode', 'simulation').title()}"
+        )
+    else:
+        render_basic_operations_tables(snapshot)
 
 
 def render_procurement_summary():
@@ -1010,6 +1176,9 @@ def render_status():
 
 
 def render_procurement_tab():
+    if not has_permission(st.session_state.auth_user, "procurement_view"):
+        show_access_denied("Your role does not have access to the procurement workflow.")
+        return
     render_procurement_summary()
     st.write("")
     render_controls()
@@ -1020,21 +1189,149 @@ def render_procurement_tab():
     render_tables()
 
 
+def render_staff_assignment_tab():
+    if not has_permission(st.session_state.auth_user, "staff_assign"):
+        show_access_denied("Only managers can assign nurses and staff.")
+        return
+
+    records = load_staff_records()
+    total_staff_count = len(records)
+    
+    st.subheader("Staff Assignment")
+    st.caption("Managers can reassign staff between wards and shifts. Available and On duty count as active staffing in operations.")
+
+    if not records:
+        st.info("No staff records are available.")
+        return
+
+    # Display total counts at top
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        st.metric("Total Staff", total_staff_count)
+    with col2:
+        total_nurses = len([r for r in records if str(r.get("role", "")).strip().lower() == "nurse"])
+        st.metric("Total Nurses", total_nurses)
+    with col3:
+        total_doctors = len([r for r in records if str(r.get("role", "")).strip().lower() == "doctor"])
+        st.metric("Total Doctors", total_doctors)
+    with col4:
+        total_support = len([r for r in records if str(r.get("role", "")).strip().lower() == "support"])
+        st.metric("Total Support Staff", total_support)
+    with col5:
+        active_staff = len([r for r in records if str(r.get("status", "")).strip().lower() in {"available", "on duty"}])
+        st.metric("Currently Active", active_staff)
+
+    staff_options = {
+        f"{row['staff_id']} | {row.get('name', '')} | {row.get('role', '')} | {row.get('ward', '')}": row
+        for row in records
+    }
+    selected_label = st.selectbox("Select staff member", list(staff_options.keys()))
+    selected_record = staff_options[selected_label]
+
+    with st.form("staff-assignment-form"):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            ward = st.selectbox(
+                "Assign to ward",
+                ["ICU", "Emergency", "General", "Surgery", "Maternity"],
+                index=["ICU", "Emergency", "General", "Surgery", "Maternity"].index(selected_record.get("ward", "General"))
+                if selected_record.get("ward", "General") in ["ICU", "Emergency", "General", "Surgery", "Maternity"]
+                else 2,
+            )
+        with col2:
+            shift_options = ["Day", "Night", "On-call"]
+            shift = st.selectbox(
+                "Shift",
+                shift_options,
+                index=shift_options.index(selected_record.get("shift", "Day"))
+                if selected_record.get("shift", "Day") in shift_options
+                else 0,
+            )
+        with col3:
+            status_options = ["Available", "On duty", "Break"]
+            status = st.selectbox(
+                "Status",
+                status_options,
+                index=status_options.index(selected_record.get("status", "Available"))
+                if selected_record.get("status", "Available") in status_options
+                else 0,
+            )
+        submitted = st.form_submit_button("Save Assignment", use_container_width=True)
+
+    if submitted:
+        ok, message = assign_staff_member(selected_record["staff_id"], ward, shift, status)
+        if ok:
+            st.session_state.realtime_state["wards"] = sync_staff_counts_to_wards(
+                st.session_state.realtime_state.get("wards", [])
+            )
+            save_realtime_state(st.session_state.realtime_state)
+            st.success(message)
+            rerun_app()
+        else:
+            st.error(message)
+
+    ward_summary = summarize_staff_by_ward(records)
+    summary_frame = pd.DataFrame(
+        [
+            {
+                "Ward": ward_name,
+                "Assigned Total": stats.get("total", 0),
+                "Active Total": stats.get("active_total", 0),
+                "Assigned Nurses": stats.get("nurses", 0),
+                "Active Nurses": stats.get("nurses_available", 0),
+                "Assigned Doctors": stats.get("doctors", 0),
+                "Active Doctors": stats.get("doctors_available", 0),
+                "Assigned Support": stats.get("support", 0),
+                "Active Support": stats.get("support_available", 0),
+            }
+            for ward_name, stats in sorted(ward_summary.items())
+        ]
+    )
+    render_table_card("Ward Staffing Summary", summary_frame)
+
+    assignment_frame = pd.DataFrame(
+        [
+            {
+                "Staff ID": row.get("staff_id", ""),
+                "Name": row.get("name", ""),
+                "Role": row.get("role", ""),
+                "Ward": row.get("ward", ""),
+                "Shift": row.get("shift", ""),
+                "Status": row.get("status", ""),
+            }
+            for row in records
+        ]
+    )
+    st.write(f"**Showing all {total_staff_count} staff members**")
+    render_table_card("Current Staff Allocation", assignment_frame)
+
+
 def main():
     init_session()
     refresh_realtime_state()
     render_header()
-    render_auto_refresh()
+    render_user_banner()
+    if not st.session_state.auth_user:
+        render_login()
+        return
+    if has_permission(st.session_state.auth_user, "operations_advanced"):
+        render_auto_refresh()
+    available_tabs = []
+    if has_permission(st.session_state.auth_user, "operations_view"):
+        available_tabs.append(("Live Operations Dashboard", render_operations_tab))
+    if has_permission(st.session_state.auth_user, "staff_assign"):
+        available_tabs.append(("Staff Assignment", render_staff_assignment_tab))
+    if has_permission(st.session_state.auth_user, "procurement_view"):
+        available_tabs.append(("Procurement Workflow", render_procurement_tab))
 
-    operations_tab, procurement_tab = st.tabs(
-        ["Live Operations Dashboard", "Procurement Workflow"]
-    )
+    if not available_tabs:
+        st.warning("Your account is authenticated but has no dashboard permissions assigned.")
+        return
 
-    with operations_tab:
-        render_operations_tab()
-
-    with procurement_tab:
-        render_procurement_tab()
+    tabs = st.tabs([label for label, _ in available_tabs])
+    for tab, (_, renderer) in zip(tabs, available_tabs):
+        with tab:
+            renderer()
 
 
 if __name__ == "__main__":

@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 import pandas as pd
 
+from ..staff_ops import summarize_staff_by_ward
+
 DATA_DIR = Path(__file__).parent.parent / "data"
 LAYOUT_FILE = DATA_DIR / "hospital_layout.json"
 
@@ -35,8 +37,13 @@ def _build_zone(ward: dict, staff: dict, position: dict) -> dict:
         "Monitors Available": int(ward["Monitors Available"]),
         "Monitors Required": int(ward["Monitors Required"]),
         "Staff Total": int(staff.get("total", 0)),
+        "Staff Active": int(staff.get("active_total", 0)),
         "Staff Nurses": int(staff.get("nurses", 0)),
+        "Staff Nurses Active": int(staff.get("nurses_available", 0)),
         "Staff Doctors": int(staff.get("doctors", 0)),
+        "Staff Doctors Active": int(staff.get("doctors_available", 0)),
+        "Staff Support": int(staff.get("support", 0)),
+        "Staff Support Active": int(staff.get("support_available", 0)),
     }
     return {
         "ward": ward["Ward"],
@@ -81,19 +88,7 @@ def _load_staff_counts() -> dict[str, dict[str, int]]:
         records = json.loads(staff_file.read_text(encoding="utf-8"))
     except (OSError, ValueError, TypeError):
         return {}
-    counts: dict[str, dict[str, int]] = {}
-    for row in records:
-        ward = row.get("ward")
-        role = str(row.get("role", "")).lower()
-        if not ward:
-            continue
-        counts.setdefault(ward, {"total": 0, "nurses": 0, "doctors": 0})
-        counts[ward]["total"] += 1
-        if role == "nurse":
-            counts[ward]["nurses"] += 1
-        if role == "doctor":
-            counts[ward]["doctors"] += 1
-    return counts
+    return summarize_staff_by_ward(records)
 
 
 def _dynamic_layout(count: int) -> list[dict]:

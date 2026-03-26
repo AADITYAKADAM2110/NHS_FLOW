@@ -1,7 +1,9 @@
 import json
 import os
 import random
-from datetime import datetime, timedelta
+from datetime import datetime
+
+from core.realtime.state import build_realtime_state, save_realtime_state
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -33,8 +35,6 @@ ward_profiles = [
         "ward": "ICU",
         "capacity": 24,
         "occupied_beds": 18,
-        "nurses_available": 10,
-        "doctors_available": 4,
         "ventilators_available": 10,
         "monitors_available": 18,
         "acuity": "Critical",
@@ -44,8 +44,6 @@ ward_profiles = [
         "ward": "Emergency",
         "capacity": 32,
         "occupied_beds": 24,
-        "nurses_available": 12,
-        "doctors_available": 4,
         "ventilators_available": 4,
         "monitors_available": 16,
         "acuity": "High",
@@ -55,8 +53,6 @@ ward_profiles = [
         "ward": "General",
         "capacity": 60,
         "occupied_beds": 38,
-        "nurses_available": 16,
-        "doctors_available": 5,
         "ventilators_available": 2,
         "monitors_available": 20,
         "acuity": "Medium",
@@ -66,8 +62,6 @@ ward_profiles = [
         "ward": "Surgery",
         "capacity": 28,
         "occupied_beds": 19,
-        "nurses_available": 9,
-        "doctors_available": 3,
         "ventilators_available": 6,
         "monitors_available": 14,
         "acuity": "High",
@@ -77,8 +71,6 @@ ward_profiles = [
         "ward": "Maternity",
         "capacity": 22,
         "occupied_beds": 14,
-        "nurses_available": 7,
-        "doctors_available": 2,
         "ventilators_available": 1,
         "monitors_available": 10,
         "acuity": "Medium",
@@ -173,24 +165,6 @@ def generate_inventory_and_suppliers():
     return inventory, supplier_catalog
 
 
-def generate_bed_dataset():
-    bed_dataset = []
-    for ward in ward_profiles:
-        resources = required_resources(ward["occupied_beds"])
-        bed_dataset.append(
-            {
-                **ward,
-                "available_beds": ward["capacity"] - ward["occupied_beds"],
-                "occupancy_rate": round(ward["occupied_beds"] / ward["capacity"], 3),
-                "admissions_last_day": random.randint(4, 12),
-                "discharges_last_day": random.randint(2, 10),
-                "last_updated": SIMULATION_START.strftime("%Y-%m-%d %H:%M:%S"),
-                **resources,
-            }
-        )
-    return bed_dataset
-
-
 def generate_staff_dataset():
     roles = [
         ("Nurse", "Band 5"),
@@ -219,53 +193,6 @@ def generate_staff_dataset():
     return staff
 
 
-def generate_equipment_dataset():
-    equipment = []
-    for ward in ward_profiles:
-        equipment.extend(
-            [
-                {
-                    "equipment_id": f"EQ-{ward['ward'][:3].upper()}-VENT",
-                    "ward": ward["ward"],
-                    "equipment_type": "Ventilator",
-                    "available_units": ward["ventilators_available"],
-                    "required_units": required_resources(ward["occupied_beds"])["required_ventilators"],
-                    "status": "Critical" if ward["ventilators_available"] < required_resources(ward["occupied_beds"])["required_ventilators"] else "OK",
-                    "last_updated": SIMULATION_START.strftime("%Y-%m-%d %H:%M:%S"),
-                },
-                {
-                    "equipment_id": f"EQ-{ward['ward'][:3].upper()}-MON",
-                    "ward": ward["ward"],
-                    "equipment_type": "Patient Monitor",
-                    "available_units": ward["monitors_available"],
-                    "required_units": required_resources(ward["occupied_beds"])["required_monitors"],
-                    "status": "Critical" if ward["monitors_available"] < required_resources(ward["occupied_beds"])["required_monitors"] else "OK",
-                    "last_updated": SIMULATION_START.strftime("%Y-%m-%d %H:%M:%S"),
-                },
-            ]
-        )
-    return equipment
-
-
-def generate_occupancy_history():
-    history = []
-    for ward in ward_profiles:
-        for day_offset in range(10):
-            timestamp = SIMULATION_START - timedelta(days=(9 - day_offset))
-            swing = random.randint(-3, 4)
-            occupied = max(0, min(ward["capacity"], ward["occupied_beds"] + swing))
-            history.append(
-                {
-                    "timestamp": timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-                    "ward": ward["ward"],
-                    "occupied_beds": occupied,
-                    "capacity": ward["capacity"],
-                    "occupancy_rate": round(occupied / ward["capacity"], 3),
-                }
-            )
-    return history
-
-
 def write_json(filename, payload):
     with open(os.path.join(DATA_DIR, filename), "w", encoding="utf-8") as handle:
         json.dump(payload, handle, indent=4)
@@ -275,25 +202,18 @@ def generate_datasets():
     ensure_data_dir()
 
     inventory, suppliers = generate_inventory_and_suppliers()
-    bed_dataset = generate_bed_dataset()
     staff_dataset = generate_staff_dataset()
-    equipment_dataset = generate_equipment_dataset()
-    occupancy_history = generate_occupancy_history()
 
     write_json("inventory.json", inventory)
     write_json("suppliers.json", suppliers)
-    write_json("beds.json", bed_dataset)
     write_json("staff.json", staff_dataset)
-    write_json("equipment.json", equipment_dataset)
-    write_json("occupancy_history.json", occupancy_history)
+    save_realtime_state(build_realtime_state(now=SIMULATION_START, mode="simulation"))
 
     print("Generated datasets:")
     print(f"  - inventory.json ({len(inventory)} rows)")
     print(f"  - suppliers.json ({len(suppliers)} rows)")
-    print(f"  - beds.json ({len(bed_dataset)} rows)")
     print(f"  - staff.json ({len(staff_dataset)} rows)")
-    print(f"  - equipment.json ({len(equipment_dataset)} rows)")
-    print(f"  - occupancy_history.json ({len(occupancy_history)} rows)")
+    print("  - realtime_state.json (1 state file)")
 
 
 if __name__ == "__main__":

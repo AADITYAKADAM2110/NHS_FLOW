@@ -48,8 +48,6 @@ def update_ward_state(state: dict, ward_name: str, updates: dict) -> tuple[dict,
             "occupied_beds": max(0, int(updates.get("occupied_beds", occupied))),
             "admissions_last_hour": admissions,
             "discharges_last_hour": discharges,
-            "nurses_available": max(0, int(updates.get("nurses_available", ward["nurses_available"]))),
-            "doctors_available": max(0, int(updates.get("doctors_available", ward["doctors_available"]))),
             "ventilators_available": max(0, int(updates.get("ventilators_available", ward["ventilators_available"]))),
             "monitors_available": max(0, int(updates.get("monitors_available", ward["monitors_available"]))),
         }
