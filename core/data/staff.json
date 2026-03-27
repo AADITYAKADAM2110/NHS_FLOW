@@ -2,13 +2,13 @@
   {
     "staff_id": "STF-ICU-001",
     "name": "ICU Staff 1",
-    "ward": "Surgery",
+    "ward": "General",
     "role": "Doctor",
     "band": "Consultant",
     "shift": "Night",
     "status": "On duty",
     "hours_remaining": 8,
-    "last_updated": "2026-03-26 13:59:25"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-ICU-002",
@@ -24,13 +24,13 @@
   {
     "staff_id": "STF-ICU-003",
     "name": "ICU Staff 3",
-    "ward": "Surgery",
+    "ward": "Emergency",
     "role": "Doctor",
     "band": "Registrar",
     "shift": "Day",
     "status": "On duty",
     "hours_remaining": 2,
-    "last_updated": "2026-03-26 13:59:25"
+    "last_updated": "2026-03-26 16:12:42"
   },
   {
     "staff_id": "STF-ICU-004",
@@ -79,13 +79,13 @@
   {
     "staff_id": "STF-ICU-008",
     "name": "ICU Staff 8",
-    "ward": "Emergency",
+    "ward": "General",
     "role": "Nurse",
     "band": "Band 6",
     "shift": "Night",
     "status": "On duty",
     "hours_remaining": 6,
-    "last_updated": "2026-03-26 13:59:25"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-ICU-009",
@@ -101,13 +101,13 @@
   {
     "staff_id": "STF-ICU-010",
     "name": "ICU Staff 10",
-    "ward": "ICU",
+    "ward": "Emergency",
     "role": "Nurse",
     "band": "Band 5",
     "shift": "On-call",
     "status": "On duty",
     "hours_remaining": 5,
-    "last_updated": "2026-04-01 06:00:00"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-ICU-011",
@@ -156,13 +156,13 @@
   {
     "staff_id": "STF-EME-003",
     "name": "Emergency Staff 3",
-    "ward": "Emergency",
+    "ward": "ICU",
     "role": "Nurse",
     "band": "Band 6",
     "shift": "Night",
     "status": "On duty",
     "hours_remaining": 2,
-    "last_updated": "2026-04-01 06:00:00"
+    "last_updated": "2026-03-26 16:12:42"
   },
   {
     "staff_id": "STF-EME-004",
@@ -195,7 +195,7 @@
     "shift": "Night",
     "status": "On duty",
     "hours_remaining": 12,
-    "last_updated": "2026-04-01 06:00:00"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-EME-007",
@@ -239,7 +239,7 @@
     "shift": "On-call",
     "status": "On duty",
     "hours_remaining": 10,
-    "last_updated": "2026-03-26 13:58:30"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-GEN-003",
@@ -294,7 +294,7 @@
     "shift": "Day",
     "status": "On duty",
     "hours_remaining": 2,
-    "last_updated": "2026-03-26 13:58:30"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-GEN-008",
@@ -530,13 +530,13 @@
   {
     "staff_id": "STF-MAT-006",
     "name": "Maternity Staff 6",
-    "ward": "Maternity",
+    "ward": "Surgery",
     "role": "Doctor",
     "band": "Consultant",
     "shift": "Night",
     "status": "On duty",
     "hours_remaining": 12,
-    "last_updated": "2026-03-26 14:00:20"
+    "last_updated": "2026-03-27 13:59:13"
   },
   {
     "staff_id": "STF-MAT-007",

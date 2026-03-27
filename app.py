@@ -30,6 +30,7 @@ from core.realtime_ops import (
 from core.realtime.staffing_sync import sync_staff_counts_to_wards
 from core.staff_ops import assign_staff_member, load_staff_records, summarize_staff_by_ward
 from core.tools.place_order import place_order
+from core.ui import render_app_shell, render_metric_band, render_table_card
 
 load_dotenv()
 
@@ -271,173 +272,29 @@ def receipt_dataframe(receipt):
     )
 
 
-def dataframe_to_html(dataframe, highlight_rules=None):
-    headers = "".join(f"<th>{column}</th>" for column in dataframe.columns)
-    rows = []
-
-    for _, row in dataframe.iterrows():
-        cells = []
-        for column in dataframe.columns:
-            css_class = ""
-            if highlight_rules:
-                for rule in highlight_rules:
-                    if rule(row, column):
-                        css_class = " class='danger-cell'"
-                        break
-            cells.append(f"<td{css_class}>{row[column]}</td>")
-        rows.append(f"<tr>{''.join(cells)}</tr>")
-
-    return f"<table class='nhs-table'><thead><tr>{headers}</tr></thead><tbody>{''.join(rows)}</tbody></table>"
-
-
-def render_table_card(title, dataframe, highlight_rules=None):
-    st.subheader(title)
-    if dataframe.empty:
-        st.info(f"No data available for {title.lower()}.")
-        return
-
-    safe_frame = dataframe.fillna("").astype(str)
-    styled_html = dataframe_to_html(safe_frame, highlight_rules=highlight_rules)
-    st.markdown(styled_html, unsafe_allow_html=True)
-
-
 def render_header():
-    st.set_page_config(page_title="NHS-FLOW", layout="wide")
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background:
-                radial-gradient(circle at top right, rgba(0, 105, 92, 0.18), transparent 24%),
-                radial-gradient(circle at top left, rgba(205, 102, 0, 0.12), transparent 26%),
-                linear-gradient(180deg, #ecf4ef 0%, #dcebe3 100%);
-            color: #16352f;
-        }
-        .block-container {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            max-width: 1320px;
-        }
-        h1, h2, h3, .stCaption, label, p, div {
-            color: #16352f;
-        }
-        .nhs-card {
-            padding: 1rem 1.2rem;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid rgba(14, 65, 58, 0.14);
-            box-shadow: 0 18px 36px rgba(18, 61, 54, 0.10);
-        }
-        .hero {
-            padding: 1.4rem 1.5rem;
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(7, 66, 59, 0.96), rgba(20, 124, 111, 0.92));
-            color: #f4fff9;
-            box-shadow: 0 24px 48px rgba(11, 93, 82, 0.18);
-            margin-bottom: 1rem;
-        }
-        .hero h1, .hero p {
-            color: #f4fff9 !important;
-        }
-        .metric-strip {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 0.8rem;
-            margin-top: 0.8rem;
-        }
-        .metric-card {
-            padding: 0.9rem 1rem;
-            border-radius: 14px;
-            background: #083d37;
-            color: #f4fff9;
-        }
-        .label {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-        .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        .alert-card {
-            padding: 0.95rem 1rem;
-            border-left: 5px solid #d95d0f;
-            background: rgba(255, 248, 239, 0.92);
-            border-radius: 14px;
-            margin-bottom: 0.7rem;
-        }
-        .danger-cell {
-            background: #fff1f3 !important;
-            color: #b42318 !important;
-            font-weight: 700;
-        }
-        .stTabs [data-baseweb="tab-list"] {
-            gap: 0.8rem;
-        }
-        .stTabs [data-baseweb="tab"] {
-            background: rgba(255, 255, 255, 0.72);
-            border-radius: 14px;
-            padding: 0.5rem 1rem;
-        }
-        .stButton > button {
-            background: linear-gradient(135deg, #0b5d52 0%, #0f7a6b 100%);
-            color: #f7fffc !important;
-            border: 0;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.98rem;
-            min-height: 3rem;
-            box-shadow: 0 10px 24px rgba(11, 93, 82, 0.18);
-        }
-        .stButton > button:hover {
-            background: linear-gradient(135deg, #0f6d60 0%, #12907e 100%);
-            color: #ffffff !important;
-        }
-        .stButton > button p, .stButton > button span, .stButton > button div {
-            color: #f7fffc !important;
-        }
-        .stTextArea textarea {
-            background: #fbfdfc;
-            color: #17342f;
-            border-radius: 14px;
-            border: 1px solid rgba(13, 80, 70, 0.18);
-        }
-        table.nhs-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.94);
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 12px 24px rgba(18, 61, 54, 0.08);
-        }
-        table.nhs-table thead th {
-            background: #0b5d52;
-            color: #f5fffb !important;
-            text-align: left;
-            padding: 0.85rem 0.9rem;
-            font-size: 0.92rem;
-        }
-        table.nhs-table tbody td {
-            padding: 0.8rem 0.9rem;
-            border-bottom: 1px solid rgba(14, 65, 58, 0.08);
-            color: #17342f !important;
-            background: rgba(255, 255, 255, 0.96);
-        }
-        table.nhs-table tbody tr:nth-child(even) td {
-            background: #f3f8f5;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        """
-        <div class="hero">
-            <h1>NHS-FLOW Command Center</h1>
-            <p>Live bed occupancy, tomorrow forecasting, resource allocation recommendations, and procurement operations in one control surface.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    realtime_state = st.session_state.get("realtime_state", {})
+    chips = [
+        ("Mode", str(realtime_state.get("operation_mode", "simulation")).title()),
+        (
+            "Hospital Time",
+            realtime_state.get("simulation_now", realtime_state.get("last_updated")).strftime("%d %b %Y %H:%M")
+            if realtime_state
+            else "",
+        ),
+    ]
+    user = st.session_state.get("auth_user")
+    if user:
+        chips.append(
+            (
+                "User",
+                f"{user.get('name', user.get('user_id', 'User'))} · {role_label(user.get('role', ''))}",
+            )
+        )
+    render_app_shell(
+        "NHS-FLOW Command Center",
+        "Live bed pressure, staffing readiness, tomorrow forecasting, and procurement workflow in one responsive control surface.",
+        chips=chips,
     )
 
 
@@ -487,36 +344,32 @@ def render_auto_refresh():
 
 def render_operations_summary(snapshot):
     totals = build_system_totals(snapshot)
-    st.markdown(
-        f"""
-        <div class="nhs-card">
-            <strong>Live Capacity Monitor</strong>
-            <div class="metric-strip">
-                <div class="metric-card">
-                    <div class="label">Beds Occupied Now</div>
-                    <div class="value">{totals['occupied']}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Beds Available</div>
-                    <div class="value">{totals['available']}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Current Occupancy</div>
-                    <div class="value">{totals['occupancy_pct']}%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Predicted Peak Tomorrow</div>
-                    <div class="value">{totals['predicted_peak']}</div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    render_metric_band(
+        "Live Capacity Monitor",
+        [
+            {"label": "Beds Occupied Now", "value": totals["occupied"], "meta": "Current in-hospital occupancy"},
+            {"label": "Beds Available", "value": totals["available"], "meta": "Immediate remaining capacity"},
+            {
+                "label": "Current Occupancy",
+                "value": f"{totals['occupancy_pct']}%",
+                "meta": "All wards combined",
+                "tone": "warn" if totals["occupancy_pct"] >= 85 else "",
+            },
+            {
+                "label": "Predicted Peak Tomorrow",
+                "value": totals["predicted_peak"],
+                "meta": "Forecasted system peak",
+                "tone": "danger" if totals["predicted_peak"] >= totals["capacity"] else "",
+            },
+        ],
+        subtitle="A fast systems view of current pressure, remaining space, and forecasted demand.",
     )
 
 
 def render_basic_operations_tables(snapshot):
-    equipment_frame = snapshot[
+    equipment_frame = snapshot.copy()
+    equipment_frame["Available Beds"] = equipment_frame["Capacity"] - equipment_frame["Occupied Beds"]
+    equipment_frame = equipment_frame[
         [
             "Ward",
             "Occupied Beds",
@@ -536,19 +389,59 @@ def render_basic_operations_tables(snapshot):
 
 
 def render_login():
-    st.markdown(
+    components.html(
         """
-        <div class="nhs-card">
-            <strong>Secure Login</strong>
-            <p>Sign in with your staff ID and password to open the role-based dashboard.</p>
-        </div>
+        <html>
+        <head>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    background: transparent;
+                    font-family: "Segoe UI", sans-serif;
+                }
+                .login-hero {
+                    border-radius: 24px;
+                    padding: 24px 26px;
+                    background:
+                        radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 28%),
+                        linear-gradient(135deg, #113d37, #0f7668 58%, #c96b18);
+                    color: #f4fff9;
+                    box-shadow: 0 24px 48px rgba(10, 53, 46, 0.18);
+                }
+                .login-hero h2 {
+                    margin: 0 0 8px;
+                    font-size: 30px;
+                }
+                .login-hero p {
+                    margin: 0;
+                    opacity: 0.92;
+                    line-height: 1.5;
+                    max-width: 760px;
+                    font-size: 15px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="login-hero">
+                <h2>Secure Staff Access</h2>
+                <p>Sign in with your role account to open the live operations dashboard, staffing controls, and procurement workspace.</p>
+            </div>
+        </body>
+        </html>
         """,
-        unsafe_allow_html=True,
+        height=150,
+        scrolling=False,
     )
-    with st.form("login-form"):
-        user_id = st.text_input("Staff ID")
-        password = st.text_input("Password", type="password")
-        submitted = st.form_submit_button("Log In", use_container_width=True)
+
+    left, right = st.columns([1.1, 0.9], gap="large")
+    with left:
+        st.subheader("Sign In")
+        st.caption("Use your staff ID and password to continue.")
+        with st.form("login-form"):
+            user_id = st.text_input("Staff ID", placeholder="e.g. MGR-1001")
+            password = st.text_input("Password", type="password", placeholder="Enter password")
+            submitted = st.form_submit_button("Log In", use_container_width=True)
 
     if submitted:
         user = authenticate_user(user_id, password)
@@ -563,16 +456,19 @@ def render_login():
     if st.session_state.login_error:
         st.error(st.session_state.login_error)
 
-    demo_accounts = pd.DataFrame(
-        [
-            {"Role": "Nurse", "ID": "NUR-1001", "Password": "nurse123"},
-            {"Role": "Staff", "ID": "STF-1001", "Password": "staff123"},
-            {"Role": "Manager", "ID": "MGR-1001", "Password": "manager123"},
-            {"Role": "Procurement Officer", "ID": "PRO-1001", "Password": "procure123"},
+    with right:
+        st.subheader("Demo Accounts")
+        st.caption("Quick-access prototype accounts")
+        card_cols = st.columns(2, gap="small")
+        accounts = [
+            ("Manager", "MGR-1001", "manager123"),
+            ("Nurse", "NUR-1001", "nurse123"),
+            ("Staff", "STF-1001", "staff123"),
+            ("Procurement", "PRO-1001", "procure123"),
         ]
-    )
-    st.caption("Demo accounts for this prototype")
-    render_table_card("Available Logins", demo_accounts)
+        for index, (role, user_id_value, password_value) in enumerate(accounts):
+            with card_cols[index % 2]:
+                st.info(f"**{role}**\n\nID: `{user_id_value}`\n\nPassword: `{password_value}`")
 
 
 def render_user_banner():
@@ -867,59 +763,27 @@ def render_hospital_map(snapshot, detailed: bool = True):
     selected_zone = next(zone for zone in zones if zone["ward"] == selected_ward)
     details = selected_zone["details"]
     if detailed:
-        st.markdown(
-            f"""
-            <div class="nhs-card">
-                <strong>{selected_ward} Detail</strong>
-                <div class="metric-strip">
-                    <div class="metric-card">
-                        <div class="label">Occupied Beds</div>
-                        <div class="value">{details['Occupied Beds']}/{details['Capacity']}</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Occupancy</div>
-                        <div class="value">{details['Occupancy %']:.1f}%</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Staff On Ward</div>
-                        <div class="value">{details['Staff Total']}</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Predicted Peak</div>
-                        <div class="value">{details['Predicted Peak Tomorrow']}</div>
-                    </div>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.subheader(f"{selected_ward} Detail")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Occupied Beds", f"{details['Occupied Beds']}/{details['Capacity']}")
+        with col2:
+            st.metric("Occupancy", f"{details['Occupancy %']:.1f}%")
+        with col3:
+            st.metric("Staff On Ward", int(details["Staff Total"]))
+        with col4:
+            st.metric("Predicted Peak", int(details["Predicted Peak Tomorrow"]))
     else:
-        st.markdown(
-            f"""
-            <div class="nhs-card">
-                <strong>{selected_ward} Detail</strong>
-                <div class="metric-strip">
-                    <div class="metric-card">
-                        <div class="label">Occupied Beds</div>
-                        <div class="value">{details['Occupied Beds']}/{details['Capacity']}</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Available Beds</div>
-                        <div class="value">{details['Capacity'] - details['Occupied Beds']}</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Ventilators</div>
-                        <div class="value">{details['Ventilators Available']}</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label">Monitors</div>
-                        <div class="value">{details['Monitors Available']}</div>
-                    </div>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.subheader(f"{selected_ward} Detail")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Occupied Beds", f"{details['Occupied Beds']}/{details['Capacity']}")
+        with col2:
+            st.metric("Available Beds", int(details["Capacity"] - details["Occupied Beds"]))
+        with col3:
+            st.metric("Ventilators", int(details["Ventilators Available"]))
+        with col4:
+            st.metric("Monitors", int(details["Monitors Available"]))
         equipment_frame = pd.DataFrame(
             [
                 {"Metric": "Occupied Beds", "Value": details["Occupied Beds"]},
@@ -1053,32 +917,20 @@ def render_procurement_summary():
     shortages = len(state["shortages"])
     staged = len(state["pending_orders"])
     total = state["total_spent"]
-
-    st.markdown(
-        f"""
-        <div class="nhs-card">
-            <strong>Procurement Workflow</strong>
-            <div class="metric-strip">
-                <div class="metric-card">
-                    <div class="label">Critical Shortages</div>
-                    <div class="value">{shortages}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Staged Orders</div>
-                    <div class="value">{staged}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Total Planned Spend</div>
-                    <div class="value">GBP {total:,.2f}</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Email Status</div>
-                    <div class="value">{"Sent" if state["email_sent"] else "Pending"}</div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    render_metric_band(
+        "Procurement Workflow",
+        [
+            {"label": "Critical Shortages", "value": shortages, "meta": "Items currently below threshold", "tone": "danger" if shortages else ""},
+            {"label": "Staged Orders", "value": staged, "meta": "Orders waiting to be sent"},
+            {"label": "Planned Spend", "value": f"GBP {total:,.2f}", "meta": "Current staged order value"},
+            {
+                "label": "Email Status",
+                "value": "Sent" if state["email_sent"] else "Pending",
+                "meta": "Supplier communication step",
+                "tone": "" if state["email_sent"] else "warn",
+            },
+        ],
+        subtitle="Track shortages, ordering momentum, and supplier communication at a glance.",
     )
 
 
