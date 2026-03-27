@@ -1,5 +1,6 @@
 from contextlib import redirect_stdout
 from io import StringIO
+import os
 
 import pandas as pd
 import streamlit as st
@@ -33,6 +34,20 @@ from core.tools.place_order import place_order
 from core.ui import render_app_shell, render_metric_band, render_table_card
 
 load_dotenv()
+
+
+def configure_openai_key():
+    if os.getenv("OPENAI_API_KEY"):
+        return
+    try:
+        secret_value = st.secrets.get("OPENAI_API_KEY")
+    except Exception:
+        secret_value = None
+    if secret_value:
+        os.environ["OPENAI_API_KEY"] = secret_value
+
+
+configure_openai_key()
 
 
 def build_initial_state():
