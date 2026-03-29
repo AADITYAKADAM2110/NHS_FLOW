@@ -13,6 +13,7 @@ def set_operation_mode(state: dict, mode: str) -> tuple[dict, str]:
         "operation_mode": mode,
         "last_updated": datetime.now(),
         "recommendation_cache": {},
+        "manager_agent": {**state.get("manager_agent", {}), "last_cycle_key": None, "last_applied_ids": []},
     }
     message = "Real mode enabled. Simulation is paused until you manually advance the hospital day."
     if mode == "simulation":
@@ -28,6 +29,7 @@ def advance_hospital_day(state: dict, days: int = 1) -> tuple[dict, str]:
             "simulation_now": simulation_now,
             "last_updated": datetime.now(),
             "recommendation_cache": {},
+            "manager_agent": {**state.get("manager_agent", {}), "last_cycle_key": None, "last_applied_ids": []},
         }
     )
     return updated_state, f"Hospital day advanced to {simulation_now.strftime('%d %b %Y %H:%M')}."
@@ -59,6 +61,7 @@ def update_ward_state(state: dict, ward_name: str, updates: dict) -> tuple[dict,
             "wards": wards,
             "last_updated": datetime.now(),
             "recommendation_cache": {},
+            "manager_agent": {**state.get("manager_agent", {}), "last_cycle_key": None, "last_applied_ids": []},
         }
     )
     return updated_state, f"Updated live ward data for {ward_name}."

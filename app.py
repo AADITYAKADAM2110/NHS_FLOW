@@ -77,7 +77,7 @@ def init_session():
     if "realtime_state" not in st.session_state:
         st.session_state.realtime_state = load_realtime_state()
     if "auto_refresh" not in st.session_state:
-        st.session_state.auto_refresh = True
+        st.session_state.auto_refresh = False
     if "operation_message" not in st.session_state:
         st.session_state.operation_message = ""
     if "skip_realtime_refresh_once" not in st.session_state:
@@ -90,12 +90,31 @@ def init_session():
 
 
 def get_query_params() -> dict:
+    if hasattr(st, "query_params"):
+        try:
+            params = dict(st.query_params)
+            normalized = {}
+            for key, value in params.items():
+                normalized[key] = value if isinstance(value, list) else [value]
+            return normalized
+        except Exception:
+            pass
     if hasattr(st, "experimental_get_query_params"):
         return st.experimental_get_query_params()
     return {}
 
 
 def set_query_params(**params):
+    if hasattr(st, "query_params"):
+        try:
+            st.query_params.clear()
+            for key, value in params.items():
+                if value is None or value == "":
+                    continue
+                st.query_params[key] = value
+            return
+        except Exception:
+            pass
     if hasattr(st, "experimental_set_query_params"):
         st.experimental_set_query_params(**params)
 
@@ -349,12 +368,17 @@ def render_auto_refresh():
             f"""
             <script>
                 setTimeout(function() {{
-                    window.parent.location.reload();
+                    var targetUrl =
+                        window.parent.location.origin +
+                        window.parent.location.pathname +
+                        window.parent.location.search;
+                    window.parent.location.href = targetUrl;
                 }}, {UPDATE_INTERVAL_SECONDS * 1000});
             </script>
             """,
             height=0,
         )
+        st.caption("Auto-refresh is enabled. The page will reload on the same signed-in URL each cycle.")
 
 
 def render_operations_summary(snapshot):
@@ -606,6 +630,14 @@ def render_real_mode_editor(advanced_access: bool = True):
 
 def render_operations_alerts(alerts, snapshot, simulation_now):
     st.subheader("Operational Recommendations")
+    manager_state = st.session_state.realtime_state.get("manager_agent", {})
+    auto_applied_ids = set(manager_state.get("last_applied_ids", []))
+    if manager_state:
+        mode_label = "Auto" if manager_state.get("mode") == "auto" else "Manual"
+        st.caption(
+            f"Manager agent: {mode_label} | "
+            f"{manager_state.get('last_summary', 'Monitoring staff and equipment flow.')}"
+        )
     
     # Apply All button
     if st.button("Apply All Recommendations", use_container_width=True):
@@ -625,6 +657,8 @@ def render_operations_alerts(alerts, snapshot, simulation_now):
     for index, alert in enumerate(alerts[:8], start=1):
         alert_id = alert["id"]
         source = "AI" if alert.get("source") == "ai" else "Rules"
+        if alert_id in auto_applied_ids:
+            source += " | Auto-applied"
         display_text = alert['text']
         if alert.get("source") == "ai" and alert.get("reason"):
             display_text += f"<br><strong>AI Explanation:</strong> {alert['reason']}"
@@ -639,6 +673,21 @@ def render_operations_alerts(alerts, snapshot, simulation_now):
                 st.session_state.operation_message = message
                 st.session_state.skip_realtime_refresh_once = True
                 rerun_app()
+
+    manager_log = list(st.session_state.realtime_state.get("manager_decision_log", []))
+    if manager_log:
+        with st.expander("Manager Decision Log", expanded=False):
+            for entry in reversed(manager_log[-12:]):
+                ward = entry.get("ward", "System")
+                action_type = entry.get("action_type", "maintain_monitoring")
+                event = entry.get("event", "recommended").title()
+                amount = entry.get("amount", 0)
+                timestamp = entry.get("timestamp", simulation_now.isoformat())
+                reason = entry.get("message") or entry.get("reason") or "No additional detail provided."
+                st.markdown(
+                    f"**{timestamp}** | {event} | {ward} | `{action_type}` x {amount}<br>{reason}",
+                    unsafe_allow_html=True,
+                )
 
 
 def build_svg_line_chart(points, labels, stroke, width=760, height=240):
@@ -1175,12 +1224,14 @@ def render_staff_assignment_tab():
 
 def main():
     init_session()
+    if not st.session_state.auth_user:
+        render_header()
+        render_user_banner()
+        render_login()
+        return
     refresh_realtime_state()
     render_header()
     render_user_banner()
-    if not st.session_state.auth_user:
-        render_login()
-        return
     if has_permission(st.session_state.auth_user, "operations_advanced"):
         render_auto_refresh()
     available_tabs = []

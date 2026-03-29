@@ -43,6 +43,9 @@ def build_realtime_state(now: datetime | None = None, mode: str = "simulation") 
         "wards": wards,
         "history": history,
         "recommendation_log": {},
+        "recommendation_cache": {},
+        "manager_agent": {"enabled": True, "mode": "auto", "last_applied_ids": [], "last_summary": ""},
+        "manager_decision_log": [],
     }
 
 
@@ -56,6 +59,18 @@ def load_realtime_state(now: datetime | None = None) -> dict:
         payload["simulation_now"] = datetime.fromisoformat(payload["simulation_now"])
         payload["operation_mode"] = payload.get("operation_mode", "simulation")
         payload["recommendation_log"] = payload.get("recommendation_log", {})
+        payload["recommendation_cache"] = payload.get("recommendation_cache", {})
+        payload["manager_agent"] = {
+            "enabled": payload.get("manager_agent", {}).get("enabled", True),
+            "mode": payload.get("manager_agent", {}).get("mode", "auto"),
+            "last_cycle_key": payload.get("manager_agent", {}).get("last_cycle_key"),
+            "last_run_at": payload.get("manager_agent", {}).get("last_run_at"),
+            "last_recommendation_count": payload.get("manager_agent", {}).get("last_recommendation_count", 0),
+            "last_applied_ids": payload.get("manager_agent", {}).get("last_applied_ids", []),
+            "last_visible": payload.get("manager_agent", {}).get("last_visible", []),
+            "last_summary": payload.get("manager_agent", {}).get("last_summary", ""),
+        }
+        payload["manager_decision_log"] = payload.get("manager_decision_log", [])
         for row in payload.get("history", []):
             row["timestamp"] = datetime.fromisoformat(row["timestamp"])
         payload["wards"] = sync_staff_counts_to_wards(payload.get("wards", []))
@@ -71,6 +86,9 @@ def save_realtime_state(state: dict) -> None:
         "operation_mode": state.get("operation_mode", "simulation"),
         "wards": [strip_staffing_fields(ward) for ward in state["wards"]],
         "recommendation_log": state.get("recommendation_log", {}),
+        "recommendation_cache": state.get("recommendation_cache", {}),
+        "manager_agent": state.get("manager_agent", {}),
+        "manager_decision_log": state.get("manager_decision_log", []),
         "history": [
             {
                 **row,

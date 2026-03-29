@@ -26,6 +26,7 @@ except ImportError:
     def predict_tomorrow(history):
         return {}
 from .manual_ops import advance_hospital_day, set_operation_mode, update_ward_state
+from .manager_agent import build_manager_snapshot, run_manager_agent_cycle
 from .map_data import build_hospital_map
 from .models import WARD_PROFILES, WardProfile
 from .recommendation_actions import apply_recommendation_action

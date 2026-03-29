@@ -34,9 +34,13 @@ def simulate_realtime(state: dict, now: datetime | None = None, force_step: bool
     return {
         "last_updated": timestamp,
         "simulation_now": simulated_timestamp,
+        "operation_mode": state.get("operation_mode", "simulation"),
         "wards": wards,
         "history": history[-HISTORY_LIMIT * len(WARD_PROFILES):],
         "recommendation_log": state.get("recommendation_log", {}),
+        "recommendation_cache": state.get("recommendation_cache", {}),
+        "manager_agent": state.get("manager_agent", {"enabled": True, "mode": "auto"}),
+        "manager_decision_log": state.get("manager_decision_log", []),
     }
 
 
