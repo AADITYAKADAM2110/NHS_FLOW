@@ -689,6 +689,30 @@ def render_operations_alerts(alerts, snapshot, simulation_now):
                     unsafe_allow_html=True,
                 )
 
+    interviews = list(st.session_state.realtime_state.get("manager_interviews", []))
+    if interviews:
+        with st.expander("Manager Interview Q&A", expanded=False):
+            for interview in reversed(interviews[-6:]):
+                st.markdown(
+                    f"**{interview.get('timestamp')}** | {interview.get('ward')} | `{interview.get('recommendation_id')}`"
+                )
+                for qa in interview.get("qa", []):
+                    st.markdown(f"- **Q:** {qa.get('question', '')}")
+                    st.markdown(f"- **A:** {qa.get('answer', '')}")
+                st.write("")
+
+    patient_events = list(st.session_state.realtime_state.get("patient_events", []))
+    if patient_events:
+        with st.expander("Patient Journey Trace", expanded=False):
+            for event in reversed(patient_events[-20:]):
+                timestamp = event.get("timestamp")
+                if hasattr(timestamp, "isoformat"):
+                    timestamp = timestamp.isoformat()
+                st.markdown(
+                    f"**{timestamp}** | {event.get('patient_id')} | {event.get('ward')} | "
+                    f"{event.get('event')} | acuity={event.get('acuity')} | {event.get('note', '')}"
+                )
+
 
 def build_svg_line_chart(points, labels, stroke, width=760, height=240):
     if not points:

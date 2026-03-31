@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from .constants import HISTORY_LIMIT, SIMULATION_START, SIMULATION_STEP_HOURS, UPDATE_INTERVAL_SECONDS
 from .helpers import history_entry, hour_pressure, refresh_ward_metrics
 from .models import WARD_PROFILES
+from .patient_flow import simulate_patient_step
 from .staffing_sync import sync_staff_counts_to_wards
 
 
@@ -26,10 +27,22 @@ def simulate_realtime(state: dict, now: datetime | None = None, force_step: bool
     simulated_timestamp = state.get("simulation_now", SIMULATION_START)
     wards = state["wards"]
     history = list(state["history"])
+    patients = list(state.get("patients", []))
+    patient_events = list(state.get("patient_events", []))
+    patient_counter = int(state.get("patient_counter", len(patients)))
     for _ in range(steps):
         timestamp += timedelta(seconds=UPDATE_INTERVAL_SECONDS)
         simulated_timestamp += timedelta(hours=SIMULATION_STEP_HOURS)
-        wards = sync_staff_counts_to_wards([simulate_ward_step(ward, simulated_timestamp) for ward in wards])
+        simulated_state = {
+            **state,
+            "wards": wards,
+            "patients": patients,
+            "patient_events": patient_events,
+            "patient_counter": patient_counter,
+        }
+        wards, patients, patient_events, patient_meta = simulate_patient_step(simulated_state, simulated_timestamp)
+        patient_counter = patient_meta["patient_counter"]
+        wards = sync_staff_counts_to_wards(wards)
         history.extend(history_entry(simulated_timestamp, ward) for ward in wards)
     return {
         "last_updated": timestamp,
@@ -37,10 +50,14 @@ def simulate_realtime(state: dict, now: datetime | None = None, force_step: bool
         "operation_mode": state.get("operation_mode", "simulation"),
         "wards": wards,
         "history": history[-HISTORY_LIMIT * len(WARD_PROFILES):],
+        "patients": patients,
+        "patient_events": patient_events[-800:],
+        "patient_counter": patient_counter,
         "recommendation_log": state.get("recommendation_log", {}),
         "recommendation_cache": state.get("recommendation_cache", {}),
         "manager_agent": state.get("manager_agent", {"enabled": True, "mode": "auto"}),
         "manager_decision_log": state.get("manager_decision_log", []),
+        "manager_interviews": state.get("manager_interviews", []),
     }
 
 

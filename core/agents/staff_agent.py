@@ -13,7 +13,7 @@ instructions = (
     )
 
 class StaffAgent(Agent):
-    def __init__(self, name, instructions, tools, model="gpt-4.1-nano"):
+    def __init__(self, name, instructions, tools, model="gpt-4.1-mini"):
         super().__init__(name=name, instructions=instructions, tools=tools, model=model)
 
     def observe(self, state: dict):

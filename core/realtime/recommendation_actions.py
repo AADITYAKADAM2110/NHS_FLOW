@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .helpers import refresh_ward_metrics
+from .patient_flow import apply_patient_flow_action, patient_outcome_summary
 from .state import sync_history_to_current_state
 from .staffing_sync import sync_staff_counts_to_wards
 from ..staff_ops import redeploy_staff_by_role
@@ -24,6 +25,12 @@ def apply_recommendation_action(state: dict, recommendation) -> tuple[dict, str]
         return state, "Recommended ward was not found in the live state."
     ward = dict(wards[target_index])
     applied_message = "Recommendation noted, but no direct simulation change was applied."
+    patient_flow_actions = {
+        "trigger_bed_plan": 3,
+        "ringfence_discharge": 2,
+        "preposition_staff": 1,
+        "overflow_standby": 2,
+    }
     if action_type == "assign_nurses":
         moved, donor_wards = redeploy_staff_by_role(ward_name, "nurse", amount)
         applied_message = f"Redeployed {moved} nurse(s) to {ward_name}."
@@ -40,26 +47,35 @@ def apply_recommendation_action(state: dict, recommendation) -> tuple[dict, str]
     elif action_type == "move_monitors":
         ward["monitors_available"] += amount
         applied_message = f"Moved {amount} patient monitor(s) to {ward_name}."
-    elif action_type == "trigger_bed_plan":
-        freed_beds = min(3, ward["occupied_beds"])
-        ward["occupied_beds"] -= freed_beds
-        applied_message = f"Triggered overflow response for {ward_name}; released capacity for {freed_beds} bed(s)."
-    elif action_type == "ringfence_discharge":
-        ward["discharges_last_hour"] += 2
-        ward["occupied_beds"] = max(0, ward["occupied_beds"] - 2)
-        applied_message = f"Added discharge support to {ward_name}; reduced occupancy by 2 beds."
-    elif action_type == "preposition_staff":
-        moved_nurses, donor_nurses = redeploy_staff_by_role(ward_name, "nurse", 1)
-        moved_doctors, donor_doctors = redeploy_staff_by_role(ward_name, "doctor", 1)
-        ward["occupied_beds"] = max(0, ward["occupied_beds"] - 1)
-        moved_total = moved_nurses + moved_doctors
-        donor_wards = sorted(set(donor_nurses + donor_doctors))
-        applied_message = f"Pre-positioned {moved_total} staff member(s) for {ward_name} and relieved 1 occupied bed."
-        if donor_wards:
-            applied_message += f" Source ward(s): {', '.join(donor_wards)}."
-    elif action_type == "overflow_standby":
-        ward["occupied_beds"] = max(0, ward["occupied_beds"] - 2)
-        applied_message = f"Placed overflow plan on standby for {ward_name}; relieved 2 occupied beds."
+    elif action_type in patient_flow_actions:
+        updated_state, moved_patients = apply_patient_flow_action(
+            state,
+            ward_name,
+            patient_flow_actions[action_type],
+            action_type,
+            simulation_now=state.get("simulation_now"),
+        )
+        if action_type == "trigger_bed_plan":
+            applied_message = f"Triggered overflow response for {ward_name}; transitioned {moved_patients} eligible patient(s)."
+        elif action_type == "ringfence_discharge":
+            applied_message = f"Added discharge support to {ward_name}; transitioned {moved_patients} eligible patient(s)."
+        elif action_type == "preposition_staff":
+            moved_nurses, donor_nurses = redeploy_staff_by_role(ward_name, "nurse", 1)
+            moved_doctors, donor_doctors = redeploy_staff_by_role(ward_name, "doctor", 1)
+            moved_total = moved_nurses + moved_doctors
+            donor_wards = sorted(set(donor_nurses + donor_doctors))
+            applied_message = f"Pre-positioned {moved_total} staff member(s) for {ward_name} and transitioned {moved_patients} patient(s)."
+            if donor_wards:
+                applied_message += f" Source ward(s): {', '.join(donor_wards)}."
+        else:
+            applied_message = f"Placed overflow plan on standby for {ward_name}; transitioned {moved_patients} eligible patient(s)."
+        outcome_summary = patient_outcome_summary(updated_state)
+        applied_message += (
+            f" Patient outcomes now active={outcome_summary['active']}, "
+            f"discharged={outcome_summary['discharged']}, deceased={outcome_summary['deceased']}."
+        )
+        refreshed_wards = sync_staff_counts_to_wards(updated_state["wards"])
+        return sync_history_to_current_state({**updated_state, "wards": refreshed_wards}), applied_message
     wards[target_index] = refresh_ward_metrics(ward)
     wards = sync_staff_counts_to_wards(wards)
     return sync_history_to_current_state({**state, "wards": wards}), applied_message
