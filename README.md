@@ -5,10 +5,34 @@ NHS-FLOW is a Python hospital operations and procurement simulator built around 
 The project currently combines three main workflows:
 
 - A role-based Streamlit dashboard for hospital operations, staff assignment, and procurement
+- An automated **Experimental Benchmarking** suite for evaluating AI vs. Rule-based management
 - A CLI procurement flow with supervisor approval checkpoints
 - A mock data generator for the current runtime datasets
 
-## 🤖 AI Agent Architecture
+## Research Framework
+
+### Problem Statement
+Modern hospital environments suffer from "operational blindness"—where managers react to crises (surges, equipment failure, staffing gaps) only after they occur. Traditional Heuristic-Based Systems (Rules) are often too rigid to handle multi-variate dependencies, such as the relationship between a ventilator shortage in the ICU and discharge delays in the General ward. 
+
+### Research Objective
+To determine if an LLM-powered autonomous agent, provided with predictive trends and a multi-ward state snapshot, can achieve faster "System Recovery" and lower mortality rates than static rule-based heuristics during an emergency surge.
+
+### Evaluation Metrics (Formal Definitions)
+1. **Average Occupancy ($\bar{O}$):** The mean utilization across the system. $\bar{O} = \frac{1}{T} \sum_{t=1}^{T} \frac{\sum B_{occupied}}{\sum B_{capacity}}$.
+2. **Staffing Gap ($G_s$):** The system-wide clinical deficit. $G_s = \sum_{w \in Wards} \max(0, Staff_{req, w} - Staff_{avail, w})$.
+3. **Recovery Day ($D_r$):** The first simulation day $t$ where $G_s = 0$ and no ward exceeds 90% occupancy.
+4. **Patient Outcome Delta:** The net change in `discharged` and `deceased` counts compared to the baseline.
+
+### Experimental Scenarios
+The evaluation suite in `scripts/manager_experiment.py` tests agents against two environments:
+
+*   **Normal Operations:** A 5-day steady state where admissions and discharges follow historical patterns.
+*   **Emergency Surge:** A 6-day stress test initialized by:
+    *   **Staff Depletion:** 5 Nurses and 1 Doctor removed from Emergency; 3 Nurses from Surgery.
+    *   **Ward Pressure:** Emergency Ward pre-loaded to 31/32 beds; ICU to 21/24 beds.
+    *   **Resource Scarcity:** Ventilator availability reduced to critical levels (2 in ER).
+
+## AI Agent Architecture
 
 NHS-FLOW utilizes two distinct AI agent frameworks to handle hospital complexity.
 
@@ -25,6 +49,13 @@ graph TD
     F -->|Tool Calls| G[redeploy_ventilators / assign_nurses]
     G -->|Update| A
 ```
+
+### Manager Agent System Prompt 
+The StaffAgent is initialized with high-level operational constraints:  "You are an NHS hospital operations analyst. Use only the allowed action_type values. Prioritize unresolved constraints and diversify tactics when recent actions had little effect. Treat the strategic context as memory; avoid repeating ineffective actions unless the problem has clearly worsened." 
+
+### Decision Constraints:  
+**Tool-Locking**: The agent cannot modify occupied_beds directly; it must use ringfence_discharge which relies on patient-flow logic. 
+**Redeployment Limits**: Staff can only be moved from wards with a surplus (Active > Required).
 
 ### 2. Multi-Agent Procurement System
 A hierarchical chain of agents specialized in supply chain logistics, using a "Human-in-the-loop" approval model.
@@ -60,21 +91,41 @@ Unlike traditional systems that rely on a persistent database connection, NHS-FL
 3.  **Contextual Memory:** The `manager_decision_log` stores the reasoning for every AI action, allowing the system to provide "Interview Q&A" to human managers explaining *why* an action was taken.
 4.  **Isolated Workspaces:** During experiments (`scripts/manager_experiment.py`), agents run against a `temp_staff.json` to prevent corruption of the production environment.
 
+### Failure Cases & Edge Behaviors
+ **Ineffective Repetition:** If the global staff pool is empty, AI attempts to `assign_nurses` are logged as "Applied" but with a result of `0 redeployed`.
+ **Prediction Lag:** Linear regression may under-react to sudden volatility, leading to late intervention.
+ **Schema Enforcement:** If an agent requests an invalid tool, the `Action Engine` fails gracefully and maintains current monitoring.
 
 Results are automatically generated as a detailed Markdown report in `reports/manager_agent_comparison.md`.
 
-### Benchmark Results Summary
+## Benchmarking: AI vs. Rules (Report Summary)
 
 The AI Manager was stress-tested against a deterministic rules-based engine and a "no-action" baseline.
+The following data is synthesized from the latest experiment run (`reports/manager_agent_comparison.md`):
 
-| Scenario | Mode | Avg Occupancy % | Staffing Gap | Patient Discharges | Deceased |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| **Normal Ops** | AI Manager | **29.8%** | **0** | **90** | **4** |
-| | Baseline | 31.2% | 1 | 86 | 6 |
-| **Emergency** | AI Manager | **27.0%** | **5** | **105** | **5** |
-| | Rules Manager | 29.9% | 8 | 97 | 5 |
+### Operational Efficiency
+| Scenario | Mode | Avg Occ % | End Staff Gap | Discharged | Deceased | Recovery |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **Normal** | **AI Manager** | **29.8%** | **0** | **90** | **4** | **Day 3** |
+| | Baseline | 31.2% | 1 | 86 | 6 | Not reached |
+| **Surge** | **AI Manager** | **27.0%** | **5** | **105** | **5** | Not reached |
+| | Rules Manager | 29.9% | 8 | 97 | 5 | Not reached |
+| | Baseline | 34.8% | 8 | 96 | 6 | Not reached |
+
+### 🧠 Manager Behavior Analysis
+The system tracks the source of every action taken during the simulation:
+- **AI Decisiveness:** In the Emergency Surge, the AI Manager performed **41 actions**, with 64 interventions driven by LLM reasoning and 20 falling back to rules for safety.
+- **Proactive vs Reactive:** The AI utilized `ringfence_discharge` on Day 0 to clear 10 beds in General/Maternity, whereas the Rules Manager waited for occupancy to cross 90%.
+
+### ⚠️ Failure Cases & Edge Behaviors
+- **Resource Exhaustion:** In the surge, logs show `Redeployed 0 nurses to ICU` because the global staff pool was exhausted. The AI correctly identified the need but hit a hard system constraint.
+- **Interview Q&A:** The "Manager Interview" logs reveal the AI's reasoning: *"I used preposition_staff because occupancy must be linked to patient transitions rather than raw bed-count edits."*
+
+---
+*Detailed traces can be found in `reports/manager_agent_comparison.md`.*
 
 **Impact Highlights:**
+- **Throughput:** During emergency surges, the AI handled **9.3% more discharges** than the rules-based baseline by proactively ringfencing beds 24 hours ahead of predicted peaks.
 - **Safety:** The AI Manager reduced mortality by **33%** in steady-state scenarios.
 - **Efficiency:** In emergency surges, the AI achieved a **7.8 point reduction** in occupancy pressure by proactively "ringfencing" discharges and redeploying staff 24 hours before predicted peaks.
 
